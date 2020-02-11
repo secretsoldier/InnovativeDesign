@@ -3,17 +3,24 @@ package sortinggg;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ *
+ * @author 18074751
+ */
+
 class NPieChartObj { // I miss C++
-    public String extention;
-    public Long extentionTotalLength;
+    public String extension;
+    public Long extensionTotalLength;
     public Color segmentColour;
 
-    public NPieChartObj(String extention, Long extentionTotalLength){
-        this.extention = extention;
-        this.extentionTotalLength = extentionTotalLength;
+    public NPieChartObj(String extension, Long extensionTotalLength, Color color){
+        this.extension = extension;
+        this.extensionTotalLength = extensionTotalLength;
+        this.segmentColour = color;
     }
 }
 
@@ -22,15 +29,13 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
     private JComponent chart, key;
 
     public NPieChartC(Map<String, NPieChartObj> map){
-        map.forEach((str, obj) -> {
-            obj.segmentColour = (new Color((int)(Math.random() * 256), (int)(Math.random() * 256), (int)(Math.random() * 256)));
-        });
         fileList.addAll(map.values());
         
         JComponent pieChart = new ChartG(), keyChart = new KeyG();
 
-        this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-        this.setLayout(new GridLayout(0, 2, 25, 0));
+        this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2)); // Creates padding around the pie chart components
+        this.setLayout(new GridLayout(0, 2, 25, 0)); // Splits the frame in half
+
         this.add(pieChart);
         this.add(keyChart);
     }
@@ -40,22 +45,23 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
         @Override
         public void paint(Graphics g) {
             super.paint(g);
+
             double totalSpace = 0;
-            for (NPieChartObj obj : fileList) {
-                totalSpace += obj.extentionTotalLength;
+            for (NPieChartObj obj : fileList) { // Finds the total space taken by the files in the list
+                totalSpace += obj.extensionTotalLength;
             }
 
-            int pos = 90;
+            int pos = 90; // Starts pos at 90 so the arcs get drawn from the top center of the pie chart
             for (NPieChartObj obj : fileList) {
 
                 g.setColor(obj.segmentColour);
                 if (obj.equals(fileList.get(fileList.size() - 1))){
-                    g.fillArc(this.getX(), this.getY(), this.getWidth(), this.getHeight(), pos, 450-pos);
+                    g.fillArc(this.getX(), this.getY(), this.getWidth(), this.getHeight(), pos, 450-pos); // 450 is 360 plus the initial 90, this is to fix weird rounding bug
                 } else {
-                    g.fillArc(this.getX(), this.getY(), this.getWidth(), this.getHeight(), pos, (int)(obj.extentionTotalLength/(totalSpace/360)));
-                } // Segment of pie
+                    g.fillArc(this.getX(), this.getY(), this.getWidth(), this.getHeight(), pos, (int)(obj.extensionTotalLength /(totalSpace/360)));
+                } // Segment of pie chart
 
-                pos += (obj.extentionTotalLength / totalSpace)*360;
+                pos += (obj.extensionTotalLength / totalSpace)*360;
             }
 
             g.setColor(Color.black); // Set colour for border
@@ -74,9 +80,11 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
 
                 public KeyColourComponent(Color colour){
                     this.colour = colour;
-                    this.setMaximumSize(new Dimension(10, 10));
-                    this.setMinimumSize(new Dimension(10, 10));
-                    this.setPreferredSize(new Dimension(10, 10));
+
+                    // This is to limit the size of the boxes to 10 by 10 pixels
+                    //this.setMaximumSize(new Dimension(10, 10));
+                    //this.setMinimumSize(new Dimension(10, 10));
+                    //this.setPreferredSize(new Dimension(10, 10));
 
                     this.setAlignmentY(Component.CENTER_ALIGNMENT);
                 }
@@ -97,16 +105,16 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
 
             public KeyComponent(NPieChartObj info){
                 colourBox = new KeyColourComponent(info.segmentColour);
-                this.keyString = new JLabel(info.extention + "   -  " + (double)info.extentionTotalLength/1024 + "/kb");
+                this.keyString = new JLabel(info.extension + "  -  " + (double)info.extensionTotalLength /1024 + "/kb");
                 this.keyString.setAlignmentY(Component.CENTER_ALIGNMENT);
 
                 this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
                 this.add(colourBox);
-                this.add(Box.createRigidArea(new Dimension(10, 0)));
+                this.add(Box.createRigidArea(new Dimension(10, 0))); // Adds space between the box and text
                 this.add(keyString);
 
-                this.setAlignmentX(Component.LEFT_ALIGNMENT);
+                this.setAlignmentX(Component.LEFT_ALIGNMENT); // Makes sure that all keys align to the far left
             }
 
         }
@@ -123,10 +131,10 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
     }
 
     public JComponent getPieChartComponent(){
-        return chart;
+        return this.chart;
     }
     public JComponent getKeyComponent(){
-        return key;
+        return this.key;
     }
 
 }
