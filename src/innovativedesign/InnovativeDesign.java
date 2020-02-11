@@ -4,16 +4,12 @@
  * and open the template in the editor.
  */
 package innovativedesign;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import java.io.File;
-
+import java.util.*;
 /**
  *
- * @author 18074751
+ * @author 17067582
  */
 public class InnovativeDesign {
 
@@ -21,59 +17,47 @@ public class InnovativeDesign {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        DesktopWindow desk = new DesktopWindow("Windows");
-        int toolsMenu = desk.addMenu("Tools");
-        JInternalFrame iframe = new JInternalFrame("Test");;
-        JInternalFrame iframe2 = new JInternalFrame("Test2");
-
-        iframe.setVisible(true);
-        iframe.setResizable(true);
-        iframe.setSize(200, 100);
-        iframe.setClosable(true);
-        iframe.setMaximizable(true);
-        iframe2.setVisible(true);
-        iframe2.setResizable(true);
-        iframe2.setSize(200, 100);
-        iframe2.setClosable(true);
-        iframe2.setMaximizable(true);
-
-        desk.addTool(toolsMenu, "Test", iframe);
-        desk.addTool(toolsMenu, "Another Test", iframe2);
-
-
-        desk.addAction(toolsMenu, "Exit", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame frame = desk.getFrame();
-                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-            }
-        });
+        Scanner io = new Scanner(System.in);
+        System.out.println("Enter the file path");
+        String dir = io.nextLine();
         
-        //Search findFile = new Search(new File("H:\\"));
-        //findFile.addListener(new ISearchListener() {
-        //    @Override
-        //    public void SearchBegin(Search.SearchType type, String searchString){
-        //        System.out.printf("Searching %s %s...\n", searchString, type.toString());
-        //    }
-        //    int i = 0;
-        //    @Override
-        //    public boolean SearchUpdate(ArrayList<File> results, boolean active){
-        //        System.out.printf("\nSearch Results:\n");
-        //        for (File file : results)
-        //            System.out.printf("%s\n", file.getPath());
-        //        /*if (i == 2){
-        //            return false;
-        //        }
-        //        i++;*/
-        //        return active;
-        //    }
-        //
-        //    @Override
-        //    public void SearchEnd(ArrayList<File> results){
-        //        System.out.printf("\nSearch Complete\n%s files found.\n", results.size());
-        //    }
-        //});
-        //findFile.byFile("main");
-        //traverse(0);
+        File folder = new File(dir);
+        //Sort by Name
+        if(folder.isDirectory()){
+            List listFile = Arrays.asList(folder.list());
+            
+            System.out.println("Ascending order listing:");
+            Collections.sort(listFile);
+            for(Object s:listFile){
+                System.out.println(s);
+            }
+            
+            System.out.println("");
+            System.out.println("");
+            
+            System.out.println("Descending order listing:");
+            Collections.sort(listFile,Collections.reverseOrder());
+            for(Object s:listFile){
+                System.out.println(s);
+            }
+        }
+        //Sort by date modified
+        File[] files = folder.listFiles();
+        System.out.println("Sort files in ascending order based on last modification");
+        
+        Arrays.sort(files,LastModifiedFileComparator.LASTMODIFIED_COMPARATOR);
+        for(int i=0;i<files.length;i++){
+            File file=files[i];
+            System.out.printf("File: %s - " + new Date(file.lastModified()) + "\n", file.getName());
+        }
+        System.out.println("");
+        System.out.println("Sort files in descending order based on last modification");
+        Arrays.sort(files,LastModifiedFileComparator.LASTMODIFIED_REVERSE);
+        for(int i=0;i<files.length;i++){
+            File file=files[i];
+            System.out.printf("File: %s - " + new Date(file.lastModified()) + "\n", file.getName());
+
+        }
     }
+    
 }
