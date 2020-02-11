@@ -1,4 +1,4 @@
-package sortinggg;
+package PieChartPack;
 
 
 import javax.swing.*;

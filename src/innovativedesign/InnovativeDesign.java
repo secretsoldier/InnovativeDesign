@@ -5,11 +5,17 @@
  */
 package innovativedesign;
 
+import DesktopPack.NLayered;
+import DesktopPack.NMenuBar;
+import SearchPack.SearchIFrame;
+import java.awt.BorderLayout;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import PieChartPack.NPieChart;
+import PieChartPack.NPieChartC;
 
 /**
  *
@@ -21,59 +27,44 @@ public class InnovativeDesign {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        DesktopWindow desk = new DesktopWindow("Windows");
-        int toolsMenu = desk.addMenu("Tools");
-        JInternalFrame iframe = new JInternalFrame("Test");;
-        JInternalFrame iframe2 = new JInternalFrame("Test2");
+        JFrame frame = new JFrame("Nebula GUI Test");
+        NLayered layer = new NLayered();
+        NMenuBar menuBar = new NMenuBar();
 
+        frame.add(layer, BorderLayout.CENTER);
+        layer.LookAndFeel("Windows");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setJMenuBar(menuBar);
+
+        menuBar.addMenu("File");  // 0
+        menuBar.addMenu("Tools"); // 1
+        menuBar.add(0, "Exit", (ActionEvent e) -> {frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));});
+
+        JInternalFrame searchIFrame = new SearchIFrame();{
+        menuBar.add(1, "Search", searchIFrame);
+        layer.add(searchIFrame, JLayeredPane.DEFAULT_LAYER);}
+
+        JInternalFrame iframe = new JInternalFrame("Test");{
         iframe.setVisible(true);
         iframe.setResizable(true);
         iframe.setSize(200, 100);
         iframe.setClosable(true);
         iframe.setMaximizable(true);
-        iframe2.setVisible(true);
-        iframe2.setResizable(true);
-        iframe2.setSize(200, 100);
-        iframe2.setClosable(true);
-        iframe2.setMaximizable(true);
+        iframe.setIconifiable(true);
+        layer.add(iframe, JLayeredPane.DEFAULT_LAYER);}
 
-        desk.addTool(toolsMenu, "Test", iframe);
-        desk.addTool(toolsMenu, "Another Test", iframe2);
+        JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"H://\"");
+        NPieChartC pi = NPieChart.createPieChartJComponent(new File("/H:/"));
+        pieChartIFrame.add(pi, BorderLayout.CENTER);
+        pieChartIFrame.setSize(500, 250);
+        pieChartIFrame.setResizable(true);
+        pieChartIFrame.setClosable(true);
+        menuBar.add(1, "Pie Chart", pieChartIFrame);
+        layer.add(pieChartIFrame, JLayeredPane.DEFAULT_LAYER);
 
-
-        desk.addAction(toolsMenu, "Exit", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame frame = desk.getFrame();
-                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-            }
-        });
-        
-        //Search findFile = new Search(new File("H:\\"));
-        //findFile.addListener(new ISearchListener() {
-        //    @Override
-        //    public void SearchBegin(Search.SearchType type, String searchString){
-        //        System.out.printf("Searching %s %s...\n", searchString, type.toString());
-        //    }
-        //    int i = 0;
-        //    @Override
-        //    public boolean SearchUpdate(ArrayList<File> results, boolean active){
-        //        System.out.printf("\nSearch Results:\n");
-        //        for (File file : results)
-        //            System.out.printf("%s\n", file.getPath());
-        //        /*if (i == 2){
-        //            return false;
-        //        }
-        //        i++;*/
-        //        return active;
-        //    }
-        //
-        //    @Override
-        //    public void SearchEnd(ArrayList<File> results){
-        //        System.out.printf("\nSearch Complete\n%s files found.\n", results.size());
-        //    }
-        //});
-        //findFile.byFile("main");
-        //traverse(0);
+        layer.setVisible(true);
+        //layer.setSize(500, 500);
+        frame.setSize(1200, 700);
+        frame.setVisible(true);
     }
 }
