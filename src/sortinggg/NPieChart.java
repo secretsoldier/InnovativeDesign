@@ -1,5 +1,6 @@
 package sortinggg;
 
+import java.awt.Color;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,10 +22,10 @@ public class NPieChart { // Copied and altered from SortingGG.java
 
             if (file.length() > 0) {
                 if (file.isFile() && map.containsKey(extension)) {
-                    currentObj.extentionTotalLength = currentObj.extentionTotalLength + file.length();
+                    currentObj.extensionTotalLength = currentObj.extensionTotalLength + file.length();
                     map.replace(extension, currentObj); // Get
                 } else {
-                    map.put(extension, new NPieChartObj(extension, file.length()));
+                    map.put(extension, new NPieChartObj(extension, file.length(), new Color((int)(Math.random() * 256), (int)(Math.random() * 256), (int)(Math.random() * 256))));
                 }
             }
         }
