@@ -51,10 +51,10 @@ public class TestMain {
         iframe.setIconifiable(true);
         layer.add(iframe, JLayeredPane.DEFAULT_LAYER);}
 
-        JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"H://\"");
-        NPieChartC pi = NPieChart.createPieChartJComponent(new File("/H:/"));
+        JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"A://\"");
+        NPieChartC pi = NPieChart.createPieChartJComponent(new File("/A:/"));
         pieChartIFrame.add(pi, BorderLayout.CENTER);
-        pieChartIFrame.setSize(400, 400);
+        pieChartIFrame.setSize(500, 250);
         pieChartIFrame.setResizable(true);
         pieChartIFrame.setClosable(true);
         menuBar.add(1, "Pie Chart", pieChartIFrame);

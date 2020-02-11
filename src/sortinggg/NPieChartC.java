@@ -6,37 +6,14 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Map;
 
-class NPieChartObj {
-    private String extention;
-    private Long extentionTotalLength;
-    private Color segmentColour;
+class NPieChartObj { // I miss C++
+    public String extention;
+    public Long extentionTotalLength;
+    public Color segmentColour;
 
     public NPieChartObj(String extention, Long extentionTotalLength){
         this.extention = extention;
         this.extentionTotalLength = extentionTotalLength;
-    }
-
-    public String getExtention(){
-        return this.extention;
-    }
-    public void setExtention(String extention){
-        this.extention = extention;
-    }
-
-    public Long getExtentionTotalLength(){
-        return this.extentionTotalLength;
-    }
-    public NPieChartObj setExtentionTotalLength(Long extentionTotalLength){
-        this.extentionTotalLength = extentionTotalLength;
-        return this;
-    }
-
-    public Color getSegmentColour() {
-        return segmentColour;
-    }
-    public NPieChartObj setSegmentColour(Color segmentColour){
-        this.segmentColour = segmentColour;
-        return this;
     }
 }
 
@@ -46,75 +23,16 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
 
     public NPieChartC(Map<String, NPieChartObj> map){
         map.forEach((str, obj) -> {
-            obj.setSegmentColour(new Color((int)(Math.random() * 256), (int)(Math.random() * 256), (int)(Math.random() * 256)));
+            obj.segmentColour = (new Color((int)(Math.random() * 256), (int)(Math.random() * 256), (int)(Math.random() * 256)));
         });
         fileList.addAll(map.values());
         
         JComponent pieChart = new ChartG(), keyChart = new KeyG();
-        
-        // http://developer.classpath.org/doc/java/awt/Container-source.html
-        // http://developer.classpath.org/doc/java/awt/BorderLayout-source.html
-        LayoutManager2 layoutManager = new BorderLayout(10, 0){ 
-            public void layoutContainer(Container target){
-                synchronized (target.getTreeLock()){
-                    Component north = this.getLayoutComponent(BorderLayout.NORTH),
-                            east = this.getLayoutComponent(BorderLayout.EAST),
-                            south = this.getLayoutComponent(BorderLayout.SOUTH),
-                            west = this.getLayoutComponent(BorderLayout.WEST),
-                            center = this.getLayoutComponent(BorderLayout.CENTER);
-                    
-                    Insets i = target.getInsets();
-                    int top = i.top;
-                    int bottom = target.getHeight() - i.bottom;
-                    int left = i.left;
-                    int right = target.getWidth() - i.right;
-                    
-                    boolean northC = north != null, eastC = east != null, southC = south != null, westC = west != null, centerC = center != null;
-                    int activeSlots = (northC ? 1 : 0) + (eastC ? 1 : 0) + (southC ? 1 : 0) + (westC ? 1 : 0) + (centerC ? 1 : 0);
-                    
-                    int width = (right / (activeSlots)) - (this.getHgap() * (activeSlots - 2)), height = (bottom / (activeSlots)) - (this.getVgap() * (activeSlots - 2));
-                    width = (target.getWidth() - i.left - i.right) / (east != null || west != null ? 2 : 1);
-                    width = 300;
-                    height = (700) / (north != null || south != null ? 2 : 1);
-                    height = 300;
-                    System.out.printf("%s\n%s, %s -- %s, %s\n", target.toString(), width, height, target.getWidth(), target.getHeight());
-                    
-                    if (northC){
-                        //Dimension n = north.getPreferredSize();
-                        north.setBounds((target.getWidth()) - (width), top, width, height);
-                        System.out.printf("North - (X: %s, Y: %s)(W: %s, H: %s)\n", (right / 2) - (width / 2), top, width, height);
-                    } 
-                    if (eastC){
-                        //Dimension e = east.getPreferredSize();
-                        width = (right - left) / (east != null || west != null ? 2 : 1);
-                        east.setBounds(((right - width)/2) + this.getHgap(), top, right, bottom);
-                        System.out.printf("East - (X: %s, Y: %s)(W: %s, H: %s)\n", right - width, top, right, bottom);
-                    } 
-                    if (southC){
-                        //Dimension s = south.getPreferredSize();
-                        south.setBounds(0, (target.getHeight()/4), 300, (target.getHeight()- (target.getHeight()/3)));
-                        System.out.printf("South - (X: %s, Y: %s)(W: %s, H: %s)\n", (0), (0), 0, (target.getHeight()- target.getHeight()));
-                    } 
-                    if (westC){
-                        //Dimension w = west.getPreferredSize();
-                        width = right / (east != null || west != null ? 2 : 1);
-                        west.setBounds( left, top, width, bottom);
-                        System.out.printf("West - (X: %s, Y: %s)(W: %s, H: %s)\n", left, top, width, bottom);
-                    } 
-                    if (centerC){
-                        //Dimension c = center.getPreferredSize();
-                        
-                    }
-                    System.out.printf("\n");
-                }
-            }
-        };
-        //layoutManager.addLayoutComponent(BorderLayout.WEST, pieChart);
-        //layoutManager.addLayoutComponent(BorderLayout.EAST, keyChart);
 
-        this.setLayout(layoutManager);
-        this.add(pieChart, BorderLayout.WEST);
-        this.add(keyChart, BorderLayout.EAST);
+        this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+        this.setLayout(new GridLayout(0, 2, 25, 0));
+        this.add(pieChart);
+        this.add(keyChart);
     }
 
     private class ChartG extends JComponent { // Stands for Pie Chart Graphic, this will be the actual pie chart
@@ -124,47 +42,84 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
             super.paint(g);
             double totalSpace = 0;
             for (NPieChartObj obj : fileList) {
-                totalSpace += obj.getExtentionTotalLength();
+                totalSpace += obj.extentionTotalLength;
             }
 
             int pos = 90;
             for (NPieChartObj obj : fileList) {
 
-                g.setColor(obj.getSegmentColour());
+                g.setColor(obj.segmentColour);
                 if (obj.equals(fileList.get(fileList.size() - 1))){
                     g.fillArc(this.getX(), this.getY(), this.getWidth(), this.getHeight(), pos, 450-pos);
                 } else {
-                    g.fillArc(this.getX(), this.getY(), this.getWidth(), this.getHeight(), pos, (int)(obj.getExtentionTotalLength()/(totalSpace/360)));
+                    g.fillArc(this.getX(), this.getY(), this.getWidth(), this.getHeight(), pos, (int)(obj.extentionTotalLength/(totalSpace/360)));
                 } // Segment of pie
 
-                pos += (obj.getExtentionTotalLength() / totalSpace)*360;
+                pos += (obj.extentionTotalLength / totalSpace)*360;
             }
 
             g.setColor(Color.black); // Set colour for border
-            for (int i = 1; i < 4; i++) {
-                g.drawOval(this.getX() - i , this.getY() - i, this.getWidth() + i, this.getHeight()); // Draw border for pie chart
+            for (int i = 0; i < 4; i++) {
+                g.drawOval(this.getX() - i , this.getY() - i, this.getWidth() + i + i, this.getHeight() + i + i); // Draw border for pie chart
             }
         }
     }
 
-    private class KeyG extends JComponent { // Stands for Key Graphics, this will be the key for the pie chart
+    private class KeyG extends JPanel { // Stands for Key Graphics, this will be the key for the pie chart
 
-        @Override
-        public void paint(Graphics g) {
-            super.paint(g);
-            int counter = 0;
-            for (NPieChartObj obj : fileList) {
+        private class KeyComponent extends JPanel { // This holds the key colour and the key text
 
-                g.setColor(obj.getSegmentColour());
-                g.fillRect(this.getX(), this.getY() + (25*counter), 10, 10); // Fills key square
+            private class KeyColourComponent extends JComponent { // This is the key colour square
+                private Color colour;
 
-                g.setColor(Color.black); // Set black for border
-                g.drawRect(this.getX(), this.getY() + (25*counter), 10, 10); // Draw key border
-                g.drawString(fileList.get(counter).getExtention() + "   space:  " + obj.getExtentionTotalLength()/1024 + "/kb", this.getX() + 25, this.getY() + 10 + (25*counter)); // Draw key information
+                public KeyColourComponent(Color colour){
+                    this.colour = colour;
+                    this.setMaximumSize(new Dimension(10, 10));
+                    this.setMinimumSize(new Dimension(10, 10));
+                    this.setPreferredSize(new Dimension(10, 10));
 
-                counter++;
+                    this.setAlignmentY(Component.CENTER_ALIGNMENT);
+                }
+
+                @Override
+                public void paint(Graphics g) {
+                    super.paint(g);
+                    g.setColor(colour);
+                    g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight()); // Fills key square
+
+                    g.setColor(Color.black); // Set black for border
+                    g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight()); // Draw key border
+                }
+            }
+
+            private JLabel keyString;
+            private KeyColourComponent colourBox;
+
+            public KeyComponent(NPieChartObj info){
+                colourBox = new KeyColourComponent(info.segmentColour);
+                this.keyString = new JLabel(info.extention + "   -  " + (double)info.extentionTotalLength/1024 + "/kb");
+                this.keyString.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+                this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+
+                this.add(colourBox);
+                this.add(Box.createRigidArea(new Dimension(10, 0)));
+                this.add(keyString);
+
+                this.setAlignmentX(Component.LEFT_ALIGNMENT);
+            }
+
+        }
+
+        public KeyG(){
+            this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+
+            for (NPieChartObj obj : fileList){
+                this.add(new KeyComponent(obj));
+                this.add(Box.createRigidArea(new Dimension(0, 5)));
             }
         }
+
     }
 
     public JComponent getPieChartComponent(){

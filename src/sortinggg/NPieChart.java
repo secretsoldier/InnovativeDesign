@@ -15,14 +15,17 @@ public class NPieChart { // Copied and altered from SortingGG.java
         for (File file : files)
         {
             String[] tokens = file.getName().split("\\.(?=[^\\.]+$)"); // 0: Filename, 1: File extension
-            String extension = tokens.length == 1 ? "unknown" : tokens[1];
+            String extension = tokens.length == 1 ? "File" : tokens[1];
 
             NPieChartObj currentObj = map.get(extension);
 
-            if (file.isFile() && map.containsKey(extension)){
-                map.replace(extension, currentObj.setExtentionTotalLength(currentObj.getExtentionTotalLength() + file.length())); // Get
-            } else {
-                map.put(extension, new NPieChartObj(extension, file.length()));
+            if (file.length() > 0) {
+                if (file.isFile() && map.containsKey(extension)) {
+                    currentObj.extentionTotalLength = currentObj.extentionTotalLength + file.length();
+                    map.replace(extension, currentObj); // Get
+                } else {
+                    map.put(extension, new NPieChartObj(extension, file.length()));
+                }
             }
         }
 
