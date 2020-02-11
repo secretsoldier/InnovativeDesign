@@ -112,3 +112,14 @@ nbproject/genfiles.properties
 nbproject/private/private.properties
 nbproject/project.properties
 neb.ico
+build/built-jar.properties
+build/classes/DesktopPack/DesktopPane.class
+build/classes/DesktopPack/NLayered.class
+build/classes/DesktopPack/NMenuBar.class
+build/classes/DesktopPack/TestMain.class
+build/classes/innovativedesign/DesktopWindow$1.class
+build/classes/innovativedesign/DesktopWindow$2.class
+build/classes/innovativedesign/DesktopWindow.class
+build/classes/innovativedesign/Filter$1.class
+build/classes/innovativedesign/Filter$filterDateType.class
+build/classes/innovativedesign/Filter.class
