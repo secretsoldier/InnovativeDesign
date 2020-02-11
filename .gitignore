@@ -123,3 +123,6 @@ build/classes/innovativedesign/DesktopWindow.class
 build/classes/innovativedesign/Filter$1.class
 build/classes/innovativedesign/Filter$filterDateType.class
 build/classes/innovativedesign/Filter.class
+/build/
+/src/createFolder/build/
+/src/createFolder/nbproject/private/
