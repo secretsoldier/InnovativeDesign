@@ -11,7 +11,6 @@ import SearchPack.SearchIFrame;
 import java.awt.BorderLayout;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import PieChartPack.NPieChart;
@@ -63,7 +62,6 @@ public class InnovativeDesign {
         layer.add(pieChartIFrame, JLayeredPane.DEFAULT_LAYER);
 
         layer.setVisible(true);
-        //layer.setSize(500, 500);
         frame.setSize(1200, 700);
         frame.setVisible(true);
     }

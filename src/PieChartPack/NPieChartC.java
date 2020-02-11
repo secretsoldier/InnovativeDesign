@@ -109,8 +109,6 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
         public KeyG(){
             this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
             
-             
-            
             for (NPieChartObj obj : fileList){
                 this.add(new KeyComponent(obj));
                 this.add(Box.createRigidArea(new Dimension(0, 5)));
