@@ -3,7 +3,6 @@ package sortinggg;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -11,18 +10,6 @@ import java.util.Map;
  *
  * @author 18074751
  */
-
-class NPieChartObj { // I miss C++
-    public String extension;
-    public Long extensionTotalLength;
-    public Color segmentColour;
-
-    public NPieChartObj(String extension, Long extensionTotalLength, Color color){
-        this.extension = extension;
-        this.extensionTotalLength = extensionTotalLength;
-        this.segmentColour = color;
-    }
-}
 
 public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Component; Copied and altered from MyCanvas.java
     private ArrayList<NPieChartObj> fileList = new ArrayList<>();
@@ -121,7 +108,9 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
 
         public KeyG(){
             this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
+            
+             
+            
             for (NPieChartObj obj : fileList){
                 this.add(new KeyComponent(obj));
                 this.add(Box.createRigidArea(new Dimension(0, 5)));
