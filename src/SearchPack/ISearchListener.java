@@ -5,6 +5,7 @@
  */
 package SearchPack;
 
+import SearchPack.Search;
 import java.io.File;
 import java.util.ArrayList;
 

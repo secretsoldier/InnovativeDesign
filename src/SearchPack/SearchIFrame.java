@@ -5,6 +5,8 @@
  */
 package SearchPack;
 
+import SearchPack.ISearchListener;
+import SearchPack.Search;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ public class SearchIFrame extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
 
+        setBorder(null);
         setClosable(true);
         setIconifiable(true);
 
