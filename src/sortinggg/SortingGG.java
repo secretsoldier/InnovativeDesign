@@ -44,7 +44,7 @@ public class SortingGG {
 
     public static void main(String[] args) throws IOException
     {
-        File folder = new File("/A:/");
+        File folder = new File("/H:/");
         File[] files = folder.listFiles();
         String types = null;
         int total = 0;
@@ -66,7 +66,8 @@ public class SortingGG {
         System.out.println(map);
         System.out.println("Print map");
         map.entrySet().forEach(entry->{
-        System.out.println(entry.getKey() + " " + entry.getValue());});
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        });
         FillArc.main(map);
     
     }
