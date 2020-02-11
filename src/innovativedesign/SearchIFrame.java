@@ -5,6 +5,8 @@
  */
 package innovativedesign;
 
+import SearchPack.ISearchListener;
+import SearchPack.Search;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
