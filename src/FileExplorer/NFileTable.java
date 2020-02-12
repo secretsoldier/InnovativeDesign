@@ -5,8 +5,8 @@
  */
 package FileExplorer;
 
+import java.io.File;
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
 
 /**
  *
@@ -14,30 +14,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class NFileTable extends JTable {
     public NFileTable(){
-        super(new AbstractTableModel(){
-            private String[] columns = {};
-            
-            
-            
-            @Override
-            public int getRowCount() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public int getColumnCount() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public Object getValueAt(int arg0, int arg1) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-            
-            public String getColumnName(int col){
-                return columns[col];
-            }
-        });
+        super(new FileTableModel(new File("/C:/")));
         this.rowSelectionAllowed = true;
         this.setFillsViewportHeight(true);
         

@@ -5,9 +5,9 @@
  */
 package DesktopPack;
 
-import innovativedesign.SearchIFrame;
-import sortinggg.NPieChart;
-import sortinggg.NPieChartC;
+import SearchPack.SearchIFrame;
+import PieChartPack.NPieChart;
+import PieChartPack.NPieChartC;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,11 +20,8 @@ import javax.swing.*;
  * @author 18074751
  */
 public class TestMain {
-    public static void main(String[] args) {
-        NLayeredFrame();
-    }
 
-    static void NLayeredFrame(){
+    public static void main(String[] args){
         JFrame frame = new JFrame("Nebula GUI Test");
         NLayered layer = new NLayered();
         NMenuBar menuBar = new NMenuBar();
@@ -68,16 +65,6 @@ public class TestMain {
         layer.setVisible(true);
         //layer.setSize(500, 500);
         frame.setSize(1200, 700);
-        frame.setVisible(true);
-    }
-
-    static void DesktopFrame(){
-        JFrame frame = new JFrame("Test");
-        DesktopPane pane = new DesktopPane();
-        frame.add(pane, BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        frame.setSize(700, 1200);
         frame.setVisible(true);
     }
 
