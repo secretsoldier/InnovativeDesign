@@ -16,7 +16,7 @@ import java.util.Queue;
  */
 public class FileIterator implements Iterator {
         private final boolean inDirectories;
-        private Queue<File> directories = new LinkedList(), subjects = new LinkedList();
+        final private Queue<File> directories = new LinkedList(), subjects = new LinkedList();
         
         public FileIterator(File root, boolean inDirectories){
             assert root.isDirectory();

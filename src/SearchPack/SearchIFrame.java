@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package innovativedesign;
+package SearchPack;
 
 import SearchPack.ISearchListener;
 import SearchPack.Search;
@@ -44,10 +44,6 @@ public class SearchIFrame extends javax.swing.JInternalFrame {
         setBorder(null);
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
-        setVisible(true);
-        setResizable(true);
-        setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 
         jButton1.setText("Search");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
