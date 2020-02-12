@@ -11,7 +11,7 @@ import java.awt.Color;
  *
  * @author 18074751
  */
-class NPieChartObj { // I miss C++
+public class NPieChartObj { // I miss C++
     public String extension;
     public Long extensionTotalLength;
     public Color segmentColour;
