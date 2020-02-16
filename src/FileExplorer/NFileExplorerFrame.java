@@ -5,7 +5,9 @@
  */
 package FileExplorer;
 
-import javax.swing.JInternalFrame;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 
 /**
  *
@@ -13,6 +15,9 @@ import javax.swing.JInternalFrame;
  */
 public class NFileExplorerFrame extends JInternalFrame {
     public NFileExplorerFrame(){
-        
+        super("File Explorer", true, true, true, true);
+        this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
+        this.setSize(500, 500);
+        this.add(new JScrollPane(new NFileTable(new DefaultFileTableModel(new File("/C:/")))), BorderLayout.CENTER);
     }
 }
