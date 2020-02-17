@@ -5,9 +5,11 @@
  */
 package DesktopPack;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -17,31 +19,34 @@ import javax.swing.JMenuItem;
  *
  * @author 18074751
  */
-public class NMenuBar extends JMenuBar {
+public class DesktopPane extends JDesktopPane{
     
-    public NMenuBar(){
-        super();
+    protected JMenuBar MainMenuBar; //This will be the menu bar that user's will access the tools from
+    private ArrayList<JMenu> menuList;
+    
+    public DesktopPane(){
+        this.MainMenuBar = new JMenuBar();
+        this.add(this.MainMenuBar, BorderLayout.PAGE_START);
     }
     
+    public JMenuBar getMenuBar(){
+        return this.MainMenuBar;
+    }
     public int addMenu(String name){
         JMenu newMenu = new JMenu(name);
-        newMenu.setVisible(true);
-        this.add(newMenu);
-        return this.getComponentCount() - 1;
+        this.menuList.add(newMenu);
+        return this.menuList.size() - 1;
     }
-    public void add(int menu, String name, JInternalFrame iframe){
+    public void addTool(int menu, String name, JInternalFrame iframe){
         JMenuItem frameMenuItem = new JMenuItem(name);
-        frameMenuItem.setVisible(true);
         frameMenuItem.addActionListener((ActionEvent e) -> {iframe.setVisible(true);});
-        ((JMenu)this.getComponent(menu)).add(frameMenuItem);
-        iframe.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
-        iframe.setVisible(false);
+        this.menuList.get(menu).add(frameMenuItem);
+        this.add(iframe);
     }
-    public void add(int menu, String name, ActionListener action){
+    public void addAction(int menu, String name, ActionListener action){
         JMenuItem frameMenuItem = new JMenuItem(name);
-        frameMenuItem.setVisible(true);
         frameMenuItem.addActionListener(action);
-        ((JMenu)this.getComponent(menu)).add(frameMenuItem);
+        this.menuList.get(menu).add(frameMenuItem);
     }
     
 }

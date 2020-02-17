@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package FilterPack;
+package innovativedesign;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.util.List;
  * @author 18074751
  */
 public class Filter {
-    private final List<File> folder;
+    private List<File> folder;
     Filter(File _folder){
         assert _folder.isDirectory() : "Filter class requires a directory.";
         this.folder = new ArrayList<>();
@@ -29,7 +29,7 @@ public class Filter {
     public File[] getArray(){
         return (File[])folder.toArray();
     }
-    public enum filterDateType {
+    enum filterDateType {
         BEFORE,
         EQUAL,
         AFTER
