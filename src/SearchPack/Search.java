@@ -17,7 +17,7 @@ public class Search {
         this.root = file;
     }
     
-    private ArrayList<ISearchListener> listeners = new ArrayList();
+    private final ArrayList<ISearchListener> listeners = new ArrayList();
     public void addListener(ISearchListener listener){
         listeners.add(listener);
     }

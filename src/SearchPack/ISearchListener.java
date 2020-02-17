@@ -5,7 +5,6 @@
  */
 package SearchPack;
 
-import SearchPack.Search;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -24,7 +23,7 @@ public interface ISearchListener {
 
     /**
      *
-     * @param results
+     * @param result
      * @param active
      * @return
      */
