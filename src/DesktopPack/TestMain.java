@@ -5,15 +5,17 @@
  */
 package DesktopPack;
 
-import innovativedesign.SearchIFrame;
-import sortinggg.NPieChart;
-import sortinggg.NPieChartC;
+
+import innovativedesign.*;
+
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import javax.swing.*;
+import sortinggg.NPieChart;
+import sortinggg.NPieChartC;
 
 /**
  *
@@ -33,6 +35,8 @@ public class TestMain {
         layer.LookAndFeel("Windows");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setJMenuBar(menuBar);
+        ImageIcon img = new ImageIcon("H:\\NetBeansProjects\\InnovativeDesign\\src\\DesktopPack\\NebulaLogo.ico");
+        frame.setIconImage(img.getImage());
 
         menuBar.addMenu("File");  // 0
         menuBar.addMenu("Tools"); // 1
@@ -77,7 +81,8 @@ public class TestMain {
         DesktopPane pane = new DesktopPane();
         frame.add(pane, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        ImageIcon img = new ImageIcon("H://NetBeansProjects//InnovativeDesign//src//DesktopPack//NebulaLogo.ico");
+        frame.setIconImage(img.getImage());
         frame.setSize(700, 1200);
         frame.setVisible(true);
     }
