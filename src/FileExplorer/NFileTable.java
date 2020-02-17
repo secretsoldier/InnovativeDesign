@@ -5,17 +5,13 @@
  */
 package FileExplorer;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.Component;
 import java.io.File;
 import java.util.Date;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -30,7 +26,21 @@ public class NFileTable extends JTable {
         this.createDefaultColumnsFromModel();
     }
 
-    private class NameCellRenderer extends JLabel implements TableCellRenderer, MouseListener {
+    @Override
+    public AbstractFileTableModel getModel() {
+        return (AbstractFileTableModel)super.getModel();
+    }
+
+    /*
+    @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.getButton() == MouseEvent.BUTTON2 && e.getClickCount() == 2) {
+                System.out.printf(this.getText() + " double clicked.");
+            }
+        }
+    */
+
+    private static class NameCellRenderer implements TableCellRenderer {
         private FileSystemView fileSystemView = FileSystemView.getFileSystemView();
         private Map<String, Icon> iconMap = new HashMap<>();
 
@@ -42,53 +52,34 @@ public class NFileTable extends JTable {
                     table.repaint();
                 }
             }).start();
-            this.setText(((File)value).getName());
-            return this;
-        }
+            return new JLabel() {
+                @Override
+                public String getText() {
+                    return ((File)value).getName();
+                }
 
-        @Override
-        public Icon getIcon() {
-            return iconMap.get(this.getText());
+                @Override
+                public Icon getIcon() {
+                    return iconMap.get(((File)value).getName());
+                }
+            };
         }
 
         public final void clearIconMap(){
             iconMap.clear();
         }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            if (e.getButton() == MouseEvent.BUTTON2 && e.getClickCount() == 2) {
-
-            }
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-
-        }
     }
 
-    private class DateModifiedCellRenderer extends JLabel implements TableCellRenderer {
+    private static class DateModifiedCellRenderer implements TableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            Date date = new Date(Long.parseLong(String.valueOf(((File)value).lastModified())));
-            this.setText(date.toGMTString());
-            return this;
+            return new JLabel() {
+                @Override
+                public String getText() {
+                    Date date = new Date(Long.parseLong(String.valueOf(((File)value).lastModified())));
+                    return date.toGMTString();
+                }
+            };
         }
     }
 
@@ -103,15 +94,15 @@ public class NFileTable extends JTable {
                 : String.format("%.1f EB", (bytes >> 20) / 0x1p40);
     } // Taken from StackOverflow
 
-    private class SizeCellRenderer extends JLabel implements TableCellRenderer {
+    private static class SizeCellRenderer implements TableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            if (((File)value).isFile()) {
-                this.setText(humanReadableByteCountBin(((File)value).length()));
-            } else {
-                this.setText("");
-            }
-            return this;
+            return new JLabel(){
+                @Override
+                public String getText() {
+                    return ((File)value).isFile() ? humanReadableByteCountBin(((File)value).length()) : "";
+                }
+            };
         }
     }
 
