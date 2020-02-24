@@ -60,6 +60,12 @@ public class InnovativeDesign {
         pieChartIFrame.setClosable(true);
         menuBar.add(1, "Pie Chart", pieChartIFrame);
         layer.add(pieChartIFrame, JLayeredPane.DEFAULT_LAYER);
+        ImageIcon icon = new ImageIcon("\\\\brookesf1\\s76\\17007976\\NetBeansProjects\\InnovativeDesign\\src\\resources\\PieChart.png");
+        pieChartIFrame.setFrameIcon(icon);
+        ImageIcon icon2 = new ImageIcon("\\\\brookesf1\\s76\\17007976\\NetBeansProjects\\InnovativeDesign\\src\\resources\\SpaceMonitoring.png");
+        searchIFrame.setFrameIcon(icon2);
+        ImageIcon img = new ImageIcon("\\\\brookesf1\\s76\\17007976\\NetBeansProjects\\InnovativeDesign\\src\\resources\\NebulaLogo.png");
+        frame.setIconImage(img.getImage());
 
         layer.setVisible(true);
         //layer.setSize(500, 500);
