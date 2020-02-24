@@ -6,6 +6,7 @@
 package DesktopPack;
 
 
+import ChartPack.BarChart.NBarChartC;
 import innovativedesign.*;
 
 
@@ -14,8 +15,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import javax.swing.*;
-import sortinggg.NPieChart;
-import sortinggg.NPieChartC;
+import ChartPack.*;
+import ChartPack.PieChart.NPieChartC;
+import java.net.URL;
+
 
 /**
  *
@@ -35,7 +38,7 @@ public class TestMain {
         layer.LookAndFeel("Windows");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setJMenuBar(menuBar);
-        ImageIcon img = new ImageIcon("H:\\NetBeansProjects\\InnovativeDesign\\src\\DesktopPack\\NebulaLogo.ico");
+        ImageIcon img = new ImageIcon("\\\\brookesf1\\s76\\17007976\\NetBeansProjects\\InnovativeDesign\\src\\resources\\NebulaLogo.png");
         frame.setIconImage(img.getImage());
 
         menuBar.addMenu("File");  // 0
@@ -44,6 +47,8 @@ public class TestMain {
 
         JInternalFrame searchIFrame = new SearchIFrame();{
         menuBar.add(1, "Search", searchIFrame);
+        ImageIcon icon = new ImageIcon("\\\\brookesf1\\s76\\17007976\\NetBeansProjects\\InnovativeDesign\\src\\resources\\SpaceMonitoring.png");
+        searchIFrame.setFrameIcon(icon);
         layer.add(searchIFrame, JLayeredPane.DEFAULT_LAYER);}
 
         JInternalFrame iframe = new JInternalFrame("Test");{
@@ -59,19 +64,31 @@ public class TestMain {
         NPieChartC pi = NPieChart.createPieChartJComponent(new File("/H:/"));
         pieChartIFrame.add(pi, BorderLayout.CENTER);
         pieChartIFrame.pack();
-        pieChartIFrame.reshape(pieChartIFrame.getX(), pieChartIFrame.getY(), pieChartIFrame.getWidth() + 75, pieChartIFrame.getHeight()+50);
+        pieChartIFrame.reshape(pieChartIFrame.getX(), pieChartIFrame.getY(), pieChartIFrame.getWidth() * 2, pieChartIFrame.getHeight()+50);
         pieChartIFrame.setResizable(true);
         pieChartIFrame.setClosable(true);
+        ImageIcon icon = new ImageIcon("\\\\brookesf1\\s76\\17007976\\NetBeansProjects\\InnovativeDesign\\src\\resources\\PieChart.png");
+        pieChartIFrame.setFrameIcon(icon);
         menuBar.add(1, "Pie Chart", pieChartIFrame);
         layer.add(pieChartIFrame, JLayeredPane.DEFAULT_LAYER);
 
+        
+          JInternalFrame BarChartIFrame = new JInternalFrame("Bar Chart: \"H://\"");
+        NBarChartC ba = NPieChart.createBarChartJComponent(new File("/H:/"));
+        BarChartIFrame.add(pi, BorderLayout.CENTER);
+        BarChartIFrame.pack();
+        BarChartIFrame.reshape(BarChartIFrame.getX(), BarChartIFrame.getY(), BarChartIFrame.getWidth() * 2, BarChartIFrame.getHeight()+50);
+        BarChartIFrame.setResizable(true);
+        BarChartIFrame.setClosable(true);
+        BarChartIFrame.setFrameIcon(icon);
+        menuBar.add(1, "Bar Chart", BarChartIFrame);
+        layer.add(BarChartIFrame, JLayeredPane.DEFAULT_LAYER);
         //SearchFrame searchFrame = new SearchFrame();
         //searchFrame.pack();
         //searchFrame.setVisible(true);
         //layer.add(searchFrame, JLayeredPane.DEFAULT_LAYER);
 
         layer.setVisible(true);
-        //layer.setSize(500, 500);
         frame.setSize(1200, 700);
         frame.setVisible(true);
     }
@@ -81,10 +98,11 @@ public class TestMain {
         DesktopPane pane = new DesktopPane();
         frame.add(pane, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon img = new ImageIcon("H://NetBeansProjects//InnovativeDesign//src//DesktopPack//NebulaLogo.ico");
+        ImageIcon img = new ImageIcon("H://NetBeansProjects//InnovativeDesign//src//resources//NebulaLogo.ico");
         frame.setIconImage(img.getImage());
         frame.setSize(700, 1200);
         frame.setVisible(true);
     }
+   
 
 }
