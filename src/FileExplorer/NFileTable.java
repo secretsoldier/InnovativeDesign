@@ -24,21 +24,13 @@ public class NFileTable extends JTable {
         this.setFillsViewportHeight(true);
         this.setRowSelectionAllowed(true);
         this.createDefaultColumnsFromModel();
+        this.addMouseListener(new FileTableMouseActions());
     }
 
     @Override
     public AbstractFileTableModel getModel() {
         return (AbstractFileTableModel)super.getModel();
     }
-
-    /*
-    @Override
-        public void mouseClicked(MouseEvent e) {
-            if (e.getButton() == MouseEvent.BUTTON2 && e.getClickCount() == 2) {
-                System.out.printf(this.getText() + " double clicked.");
-            }
-        }
-    */
 
     private static class NameCellRenderer implements TableCellRenderer {
         private FileSystemView fileSystemView = FileSystemView.getFileSystemView();

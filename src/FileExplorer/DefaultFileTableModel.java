@@ -12,6 +12,7 @@ public class DefaultFileTableModel extends AbstractFileTableModel {
     public final void setRoot(File root){
         assert root.isDirectory();
 
+        this.emptyModel();
         this.root = root;
 
         new Thread(() -> {
