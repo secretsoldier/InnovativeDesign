@@ -1,4 +1,4 @@
-package sortinggg;
+package PieChartPack;
 
 import java.awt.Color;
 import java.io.File;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sortinggg;
+package PieChartPack;
 
 import java.awt.Color;
 
@@ -11,7 +11,7 @@ import java.awt.Color;
  *
  * @author 18074751
  */
-class NPieChartObj { // I miss C++
+public class NPieChartObj { // I miss C++
     public String extension;
     public Long extensionTotalLength;
     public Color segmentColour;
