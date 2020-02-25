@@ -18,10 +18,9 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author 18074751
  */
-public class NFileTable extends JTable {
-    public NFileTable(AbstractFileTableModel fileTableModel){
+public class FileTable extends JTable {
+    public FileTable(AbstractFileTableModel fileTableModel){
         super(fileTableModel);
-        this.setFillsViewportHeight(true);
         this.setRowSelectionAllowed(true);
         this.createDefaultColumnsFromModel();
         this.addMouseListener(new FileTableMouseActions());
@@ -75,7 +74,7 @@ public class NFileTable extends JTable {
         }
     }
 
-    public static String humanReadableByteCountBin(long bytes) {
+    private static String humanReadableByteCountBin(long bytes) {
         long b = bytes == Long.MIN_VALUE ? Long.MAX_VALUE : Math.abs(bytes);
         return b < 1024L ? bytes + " B"
                 : b <= 0xfffccccccccccccL >> 40 ? String.format("%.1f KB", bytes / 0x1p10)
@@ -102,5 +101,14 @@ public class NFileTable extends JTable {
     @Override
     public TableCellRenderer getCellRenderer(int row, int column) {
         return renderers[column];
+    }
+
+    @Override
+    public File getValueAt(int row, int column) {
+        return (File)super.getValueAt(row, column);
+    }
+
+    public File getValueAt(int row) {
+        return (File)super.getValueAt(row, 0);
     }
 }

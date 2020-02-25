@@ -13,11 +13,11 @@ import java.io.File;
  *
  * @author 18074751
  */
-public class NFileExplorerFrame extends JInternalFrame {
-    public NFileExplorerFrame(){
+public class FileExplorerFrame extends JInternalFrame {
+    public FileExplorerFrame(){
         super("File Explorer", true, true, true, true);
         this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         this.setSize(500, 500);
-        this.add(new JScrollPane(new NFileTable(new DefaultFileTableModel(new File("/C:/")))), BorderLayout.CENTER);
+        this.add(new JScrollPane(new FileTable(new DefaultFileTableModel(new File("/C:/")))), BorderLayout.CENTER);
     }
 }

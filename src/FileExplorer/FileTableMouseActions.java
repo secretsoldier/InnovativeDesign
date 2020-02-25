@@ -1,6 +1,5 @@
 package FileExplorer;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,7 +8,7 @@ import java.io.File;
 public class FileTableMouseActions extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
-        NFileTable table = (NFileTable)e.getSource(); File selectedFile = (File)table.getValueAt(table.getSelectedRow(), 0);
+        FileTable table = (FileTable)e.getSource(); File selectedFile = table.getValueAt(table.getSelectedRow());
 
         if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2){ // Double click
             if (selectedFile.isDirectory()) {

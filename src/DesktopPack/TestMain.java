@@ -5,7 +5,7 @@
  */
 package DesktopPack;
 
-import FileExplorer.NFileExplorerFrame;
+import FileExplorer.FileExplorerFrame;
 import SearchPack.SearchIFrame;
 import PieChartPack.NPieChart;
 import PieChartPack.NPieChartC;
@@ -49,8 +49,8 @@ public class TestMain {
         iframe.setIconifiable(true);
         layer.add(iframe, JLayeredPane.DEFAULT_LAYER);}
 
-        JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"A://\"");
-        NPieChartC pi = NPieChart.createPieChartJComponent(new File("/A:/"));
+        JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"H://\"");
+        NPieChartC pi = NPieChart.createPieChartJComponent(new File("/H:/"));
         pieChartIFrame.add(pi, BorderLayout.CENTER);
         pieChartIFrame.setSize(500, 250);
         pieChartIFrame.setResizable(true);
@@ -58,7 +58,7 @@ public class TestMain {
         menuBar.add(1, "Pie Chart", pieChartIFrame);
         layer.add(pieChartIFrame, JLayeredPane.DEFAULT_LAYER);
 
-        JInternalFrame fileEx = new NFileExplorerFrame();
+        JInternalFrame fileEx = new FileExplorerFrame();
         menuBar.add(1, "File Explorer", fileEx);
         layer.add(fileEx, JLayeredPane.DEFAULT_LAYER);
 
