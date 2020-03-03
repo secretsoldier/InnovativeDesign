@@ -11,12 +11,12 @@ import java.awt.Color;
  *
  * @author 18074751
  */
-public class NPieChartObj { // I miss C++
+public class PieChartObj { // I miss C++
     public String extension;
     public Long extensionTotalLength;
     public Color segmentColour;
 
-    public NPieChartObj(String extension, Long extensionTotalLength, Color color){
+    public PieChartObj(String extension, Long extensionTotalLength, Color color){
         this.extension = extension;
         this.extensionTotalLength = extensionTotalLength;
         this.segmentColour = color;

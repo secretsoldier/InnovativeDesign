@@ -7,8 +7,8 @@ package DesktopPack;
 
 import FileExplorer.FileExplorerFrame;
 import SearchPack.SearchIFrame;
-import PieChartPack.NPieChart;
-import PieChartPack.NPieChartC;
+import PieChartPack.PieChart;
+import PieChartPack.PieChartC;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,7 +25,7 @@ public class TestMain {
     public static void main(String[] args){
         JFrame frame = new JFrame("Nebula GUI Test");
         NLayered layer = new NLayered();
-        NMenuBar menuBar = new NMenuBar();
+        MenuBar menuBar = new MenuBar();
 
         frame.add(layer, BorderLayout.CENTER);
         layer.LookAndFeel("Windows");
@@ -50,7 +50,7 @@ public class TestMain {
         layer.add(iframe, JLayeredPane.DEFAULT_LAYER);}
 
         JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"H://\"");
-        NPieChartC pi = NPieChart.createPieChartJComponent(new File("/H:/"));
+        PieChartC pi = PieChart.createPieChartJComponent(new File("/H:/"));
         pieChartIFrame.add(pi, BorderLayout.CENTER);
         pieChartIFrame.setSize(500, 250);
         pieChartIFrame.setResizable(true);

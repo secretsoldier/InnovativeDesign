@@ -6,15 +6,17 @@
 package innovativedesign;
 
 import DesktopPack.NLayered;
-import DesktopPack.NMenuBar;
+import DesktopPack.MenuBar;
 import SearchPack.SearchIFrame;
 import java.awt.BorderLayout;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import PieChartPack.NPieChart;
-import PieChartPack.NPieChartC;
+import java.net.URL;
+
+import PieChartPack.PieChart;
+import PieChartPack.PieChartC;
 
 /**
  *
@@ -28,7 +30,7 @@ public class InnovativeDesign {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Nebula GUI Test");
         NLayered layer = new NLayered();
-        NMenuBar menuBar = new NMenuBar();
+        MenuBar menuBar = new MenuBar();
 
         frame.add(layer, BorderLayout.CENTER);
         layer.LookAndFeel("Windows");
@@ -53,7 +55,7 @@ public class InnovativeDesign {
         layer.add(iframe, JLayeredPane.DEFAULT_LAYER);}
 
         JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"H://\"");
-        NPieChartC pi = NPieChart.createPieChartJComponent(new File("/H:/"));
+        PieChartC pi = PieChart.createPieChartJComponent(new File("/H:/"));
         pieChartIFrame.add(pi, BorderLayout.CENTER);
         pieChartIFrame.setSize(500, 250);
         pieChartIFrame.setResizable(true);
@@ -66,4 +68,6 @@ public class InnovativeDesign {
         frame.setSize(1200, 700);
         frame.setVisible(true);
     }
+
+
 }
