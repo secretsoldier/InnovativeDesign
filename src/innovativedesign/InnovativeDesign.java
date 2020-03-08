@@ -31,6 +31,7 @@ public class InnovativeDesign {
         JFrame frame = new JFrame("Nebula GUI Test");
         NLayered layer = new NLayered();
         MenuBar menuBar = new MenuBar();
+        frame.setIconImage(Resources.getIcon("NebulaLogo.png").getImage());
 
         frame.add(layer, BorderLayout.CENTER);
         layer.LookAndFeel("Windows");
@@ -44,6 +45,7 @@ public class InnovativeDesign {
         JInternalFrame searchIFrame = new SearchIFrame();{
         menuBar.add(1, "Search", searchIFrame);
         layer.add(searchIFrame, JLayeredPane.DEFAULT_LAYER);}
+        searchIFrame.setFrameIcon(Resources.getIcon("SpaceMonitoring.png"));
 
         JInternalFrame iframe = new JInternalFrame("Test");{
         iframe.setVisible(true);
@@ -54,17 +56,17 @@ public class InnovativeDesign {
         iframe.setIconifiable(true);
         layer.add(iframe, JLayeredPane.DEFAULT_LAYER);}
 
-        JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"H://\"");
-        PieChartC pi = PieChart.createPieChartJComponent(new File("/H:/"));
+        JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"A://\"");
+        PieChartC pi = PieChart.createPieChartJComponent(new File("/A:/"));
         pieChartIFrame.add(pi, BorderLayout.CENTER);
         pieChartIFrame.setSize(500, 250);
         pieChartIFrame.setResizable(true);
         pieChartIFrame.setClosable(true);
         menuBar.add(1, "Pie Chart", pieChartIFrame);
         layer.add(pieChartIFrame, JLayeredPane.DEFAULT_LAYER);
+        pieChartIFrame.setFrameIcon(Resources.getIcon("PieChart.png"));
 
         layer.setVisible(true);
-        //layer.setSize(500, 500);
         frame.setSize(1200, 700);
         frame.setVisible(true);
     }
