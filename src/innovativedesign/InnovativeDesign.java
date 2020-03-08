@@ -29,6 +29,7 @@ public class InnovativeDesign {
         JFrame frame = new JFrame("Nebula GUI Test");
         NLayered layer = new NLayered();
         NMenuBar menuBar = new NMenuBar();
+        frame.setIconImage(Resources.getIcon("NebulaLogo.png").getImage());
 
         frame.add(layer, BorderLayout.CENTER);
         layer.LookAndFeel("Windows");
@@ -42,6 +43,7 @@ public class InnovativeDesign {
         JInternalFrame searchIFrame = new SearchIFrame();{
         menuBar.add(1, "Search", searchIFrame);
         layer.add(searchIFrame, JLayeredPane.DEFAULT_LAYER);}
+        searchIFrame.setFrameIcon(Resources.getIcon("SpaceMonitoring.png"));
 
         JInternalFrame iframe = new JInternalFrame("Test");{
         iframe.setVisible(true);
@@ -52,23 +54,17 @@ public class InnovativeDesign {
         iframe.setIconifiable(true);
         layer.add(iframe, JLayeredPane.DEFAULT_LAYER);}
 
-        JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"H://\"");
-        NPieChartC pi = NPieChart.createPieChartJComponent(new File("/H:/"));
+        JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"A://\"");
+        NPieChartC pi = NPieChart.createPieChartJComponent(new File("/A:/"));
         pieChartIFrame.add(pi, BorderLayout.CENTER);
         pieChartIFrame.setSize(500, 250);
         pieChartIFrame.setResizable(true);
         pieChartIFrame.setClosable(true);
         menuBar.add(1, "Pie Chart", pieChartIFrame);
         layer.add(pieChartIFrame, JLayeredPane.DEFAULT_LAYER);
-        ImageIcon icon = new ImageIcon("\\\\brookesf1\\s76\\17007976\\NetBeansProjects\\InnovativeDesign\\src\\resources\\PieChart.png");
-        pieChartIFrame.setFrameIcon(icon);
-        ImageIcon icon2 = new ImageIcon("\\\\brookesf1\\s76\\17007976\\NetBeansProjects\\InnovativeDesign\\src\\resources\\SpaceMonitoring.png");
-        searchIFrame.setFrameIcon(icon2);
-        ImageIcon img = new ImageIcon("\\\\brookesf1\\s76\\17007976\\NetBeansProjects\\InnovativeDesign\\src\\resources\\NebulaLogo.png");
-        frame.setIconImage(img.getImage());
+        pieChartIFrame.setFrameIcon(Resources.getIcon("PieChart.png"));
 
         layer.setVisible(true);
-        //layer.setSize(500, 500);
         frame.setSize(1200, 700);
         frame.setVisible(true);
     }
