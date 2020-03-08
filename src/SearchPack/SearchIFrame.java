@@ -148,8 +148,8 @@ public class SearchIFrame extends javax.swing.JInternalFrame {
                 @Override
                 public void SearchBegin(Search.SearchType type, String searchString){
                     System.out.printf("Search Init\n");
-                    jTextField1.enable(false);
-                    jButton1.enable(false);
+                    jTextField1.setEnabled(false);
+                    jButton1.setEnabled(false);
                 };
                 @Override
                 public boolean SearchUpdate(File result, boolean active){
@@ -161,8 +161,8 @@ public class SearchIFrame extends javax.swing.JInternalFrame {
                 @Override
                 public void SearchEnd(ArrayList<File> results){
                     System.out.printf("Search finished\n");
-                    jTextField1.enable(true);
-                    jButton1.enable(true);
+                    jTextField1.setEnabled(true);
+                    jButton1.setEnabled(true);
                 };
 
             });
