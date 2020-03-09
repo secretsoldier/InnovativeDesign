@@ -36,8 +36,8 @@ public class FileTableMouseActions extends MouseAdapter {
                         ((JTextField) message).setText(selectedFile.getName());
                         int result = JOptionPane.showConfirmDialog(parent, message, "Rename", JOptionPane.YES_NO_OPTION);
                         if (result == JOptionPane.YES_OPTION){
-                            String path = selectedFile.getPath();
-                            if (!selectedFile.renameTo(new File(path + ((JTextField) message).getText()))) {
+                            String[] path = selectedFile.getPath().split(".*[\\]");
+                            if (!selectedFile.renameTo(new File(path[0] + ((JTextField) message).getText()))) {
                                     JOptionPane.showMessageDialog(parent, "Renaming has been unsuccessful", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                             System.out.printf("\"%s\" has been renamed to \"%s\"\n", selectedFile.getName(), ((JTextField) message).getText());
