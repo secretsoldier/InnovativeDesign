@@ -12,8 +12,6 @@ import javax.swing.*;
  * @author 18074751
  */
 public class NLayered extends JLayeredPane {
-    private DesktopManager desktopManager;
-    
     public NLayered(){
         super();
     }

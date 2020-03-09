@@ -20,23 +20,24 @@ public class NMenuBar extends JMenuBar {
     
     public NMenuBar(){
         super();
-    }
+    } // Constructor
     
-    public int addMenu(String name){
+    public int addMenu(String name){ // This adds a menu to the Menu Bar (Headers). Look at usage in InnovativeDesign.java
         JMenu newMenu = new JMenu(name);
         newMenu.setVisible(true);
         this.add(newMenu);
-        return this.getComponentCount() - 1;
+        return this.getComponentCount() - 1; // Returns the Menu's ID that the developer can add with the add Method
     }
-    public void add(int menu, String name, JInternalFrame iframe){
-        JMenuItem frameMenuItem = new JMenuItem(name);
-        frameMenuItem.setVisible(true);
-        frameMenuItem.addActionListener((ActionEvent e) -> {iframe.setVisible(true);});
-        ((JMenu)this.getComponent(menu)).add(frameMenuItem);
-        iframe.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
-        iframe.setVisible(false);
+    public void add(int menu, String name, JInternalFrame iframe){ // Adds Items to declared Menu
+        JMenuItem frameMenuItem = new JMenuItem(name); // Creates Menu Item with the parameter "name"
+        frameMenuItem.setVisible(true); // Menu Item is made Visible
+        frameMenuItem.addActionListener((ActionEvent e) -> {iframe.setVisible(true);}); // Menu Item gets given the Action to make the parameter "iframe" visible on click
+
+        ((JMenu)this.getComponent(menu)).add(frameMenuItem); // This adds the Menu Item to the Menu Bar
+        iframe.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE); // Makes it not visible on close
+        iframe.setVisible(false); // Sets the parameter "iframe" not visible
     }
-    public void add(int menu, String name, ActionListener action){
+    public void add(int menu, String name, ActionListener action){ // Adds Items to declared Menus, look to first "add" for comments
         JMenuItem frameMenuItem = new JMenuItem(name);
         frameMenuItem.setVisible(true);
         frameMenuItem.addActionListener(action);

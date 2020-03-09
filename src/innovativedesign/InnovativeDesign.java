@@ -32,27 +32,28 @@ public class InnovativeDesign {
         frame.setIconImage(Resources.getIcon("NebulaLogo.png").getImage());
 
         frame.add(layer, BorderLayout.CENTER);
-        layer.LookAndFeel("Windows");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        layer.LookAndFeel("Windows"); // This controls how the GUI looks
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Sets how the window will close
         frame.setJMenuBar(menuBar);
 
         menuBar.addMenu("File");  // 0
         menuBar.addMenu("Tools"); // 1
         menuBar.add(0, "Exit", (ActionEvent e) -> {frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));});
 
-        JInternalFrame searchIFrame = new SearchIFrame();{
-        menuBar.add(1, "Search", searchIFrame);
-        layer.add(searchIFrame, JLayeredPane.DEFAULT_LAYER);}
-        searchIFrame.setFrameIcon(Resources.getIcon("SpaceMonitoring.png"));
+        JInternalFrame searchIFrame = new SearchIFrame();{ // This initlises Search Frame
+        menuBar.add(1, "Search", searchIFrame); // This adds it to the Menu Bar
+        layer.add(searchIFrame, JLayeredPane.DEFAULT_LAYER);} // This adds it to the Virtual Desktop
+        searchIFrame.setFrameIcon(Resources.getIcon("SpaceMonitoring.png")); // This sets the Frame's Icon
 
         JInternalFrame iframe = new JInternalFrame("Test");{
-        iframe.setVisible(true);
-        iframe.setResizable(true);
-        iframe.setSize(200, 100);
-        iframe.setClosable(true);
-        iframe.setMaximizable(true);
-        iframe.setIconifiable(true);
-        layer.add(iframe, JLayeredPane.DEFAULT_LAYER);}
+            iframe.setVisible(true);
+            iframe.setResizable(true);
+            iframe.setSize(200, 100);
+            iframe.setClosable(true);
+            iframe.setMaximizable(true);
+            iframe.setIconifiable(true);
+            layer.add(iframe, JLayeredPane.DEFAULT_LAYER);
+        }
 
         JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"A://\"");
         NPieChartC pi = NPieChart.createPieChartJComponent(new File("/A:/"));
