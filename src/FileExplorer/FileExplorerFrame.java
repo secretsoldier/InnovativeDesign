@@ -18,6 +18,6 @@ public class FileExplorerFrame extends JInternalFrame {
         super("File Explorer", true, true, true, true);
         this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         this.setSize(500, 500);
-        this.add( new FileTablePanel( new DefaultFileTableModel( new File("/C:/") ) , this), BorderLayout.CENTER);
+        this.add( new FileTablePanel( new DefaultFileTableModel( new File("/H:/") ) , this), BorderLayout.CENTER);
     }
 }

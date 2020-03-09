@@ -2,6 +2,7 @@ package FileExplorer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -27,41 +28,37 @@ public class FileTableMouseActions extends MouseAdapter {
                 }
             }
         } else if (e.getButton() == MouseEvent.BUTTON3){ // Right click menu
-            JPopupMenu menu = new JPopupMenu(){
-                JMenuItem rename = new JMenuItem("rename"), delete = new JMenuItem("delete");{
-                    rename.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            Object[] options = {new JLabel("Yes"), new JLabel("Cancel")};
-                            int result = JOptionPane.showOptionDialog(parent, "Are you sure you want to delete this file?", // TODO Fix dialog box
-                                    "Deletion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                                    null, options, options[0]);
-                            if (result == JOptionPane.YES_OPTION){
-                                System.out.printf("\"%s\" has been deleted", selectedFile.getName());
-                                //selectedFile.delete(); // TODO Show more indication of deletion
+            class FileContext extends JPopupMenu{
+                JMenuItem rename = new JMenuItem("Rename"), delete = new JMenuItem("Delete");{
+                    rename.addActionListener((ActionEvent e) -> {
+                        Object[] options = {"Confirm", "Cancel"};
+                        Object message = new JTextField();
+                        ((JTextField) message).setText(selectedFile.getName());
+                        int result = JOptionPane.showConfirmDialog(parent, message, "Rename", JOptionPane.YES_NO_OPTION);
+                        if (result == JOptionPane.YES_OPTION){
+                            String path = selectedFile.getPath();
+                            if (!selectedFile.renameTo(new File(path + ((JTextField) message).getText()))) {
+                                    JOptionPane.showMessageDialog(parent, "Renaming has been unsuccessful", "Error", JOptionPane.ERROR_MESSAGE);
                             }
+                            System.out.printf("\"%s\" has been renamed to \"%s\"\n", selectedFile.getName(), ((JTextField) message).getText());
                         }
                     });
                     this.add(rename);
 
-                    delete.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            Object[] options = {new JLabel("Confirm"), new JLabel("Cancel")};
-                            Object message = new JTextField();
-                            int result = JOptionPane.showConfirmDialog(parent, message, "Rename", JOptionPane.YES_NO_OPTION); // TODO Fix dialog box
-                            if (result == JOptionPane.YES_OPTION){
-                                String path = selectedFile.getPath();
-                                /*if (!selectedFile.renameTo(new File(path + ((JTextField) message).getText()))) {
-                                    JOptionPane.showMessageDialog(parent, "Renaming has been unsuccessful", "Error", JOptionPane.ERROR_MESSAGE);
-                                }*/
-                                System.out.printf("\"%s\" has been renamed to \"%s\"", selectedFile.getName(), ((JTextField) message).getText());
-                            }
+                    delete.addActionListener((ActionEvent e) -> {
+                        Object[] options = {"Yes", "Cancel"};
+                        int result = JOptionPane.showOptionDialog(parent, "Are you sure you want to delete this file?",
+                                "Deletion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                                null, options, options[0]);
+                        if (result == JOptionPane.YES_OPTION){
+                            System.out.printf("\"%s\" has been deleted\n", selectedFile.getName());
+                            selectedFile.delete(); // TODO Show more indication of deletion
                         }
                     });
                     this.add(delete);
                 }
-            };
+            }
+            FileContext menu = new FileContext();
             menu.pack();
             menu.setVisible(true);
             menu.show(e.getComponent(), e.getX(), e.getY());
