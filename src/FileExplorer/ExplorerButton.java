@@ -38,7 +38,8 @@ public class ExplorerButton extends JButton {
     public void setIcon(Icon defaultIcon) {
         if (defaultIcon.getIconHeight() != this.getHeight()){
             // TODO Icon resizing
-        } else if (defaultIcon.getIconWidth() != this.getWidth()){
+        }
+        if (defaultIcon.getIconWidth() != this.getWidth()){
             // TODO Icon resizing
         }
         super.setIcon(defaultIcon);

@@ -19,11 +19,11 @@ import javax.swing.table.TableCellRenderer;
  * @author 18074751
  */
 public class FileTable extends JTable {
-    public FileTable(AbstractFileTableModel fileTableModel){
+    public FileTable(AbstractFileTableModel fileTableModel, Component parent){
         super(fileTableModel);
         this.setRowSelectionAllowed(true);
         this.createDefaultColumnsFromModel();
-        this.addMouseListener(new FileTableMouseActions());
+        this.addMouseListener(new FileTableMouseActions(parent));
     }
 
     @Override

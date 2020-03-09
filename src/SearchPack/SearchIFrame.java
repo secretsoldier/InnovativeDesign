@@ -173,7 +173,6 @@ public class SearchIFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
-        // ToDo: If foreground is grey, remove placeholder text and change foreground colour to black
         if (this.jTextField1.getForeground().equals(Color.lightGray)){
             this.jTextField1.setText("");
             this.jTextField1.setForeground(Color.black);
@@ -181,7 +180,6 @@ public class SearchIFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField1FocusGained
 
     private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
-        // ToDo: If text field is empty, add placeholder text and changed foreground colour to grey
         if (this.jTextField1.getText().equals("")){
             this.jTextField1.setText("Enter Text...");
             this.jTextField1.setForeground(Color.lightGray);

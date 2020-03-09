@@ -51,8 +51,8 @@ public class FileTablePanel extends JPanel {
         this.add(trayPanel);
 
     } // Panel Settings
-    public FileTablePanel(AbstractFileTableModel tableModel){
-        table = new FileTable(tableModel);
+    public FileTablePanel(AbstractFileTableModel tableModel, Component parent){
+        table = new FileTable(tableModel, parent);
         scrollPane = new JScrollPane(table);
         this.add(scrollPane);
     }
