@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NPieChart { // Copied and altered from SortingGG.java
+public class NChart { // Copied and altered from SortingGG.java
 
     private static Map<String, NPieChartObj> RootToMap(File root){
         assert root.isDirectory();

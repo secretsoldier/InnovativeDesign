@@ -51,14 +51,16 @@ public class NBarChartC extends JComponent {
             for (NPieChartObj obj : fileList) { // Finds the total space taken by the files in the list
                 totalSpace += obj.extensionTotalLength;
             }
-
+            
             int pos = 0; // Starts pos at 90 so the arcs get drawn from the top center of the Bar chart
-            int height = 350;
+            long height =  fileList.get(0).extensionTotalLength;
             for (NPieChartObj obj : fileList) {
                 g.setColor(obj.segmentColour);
-                g.drawRect(0,0, 50, (int)(obj.extensionTotalLength/height));
+                float preh = (((float)obj.extensionTotalLength/(float)height) * (float) 300);
+                g.fillRect(pos,0, 25, (int)(preh));
+                pos += 25;
             }
-                pos += 50;
+            
       
         }
     }
@@ -86,7 +88,6 @@ public class NBarChartC extends JComponent {
                     super.paint(g);
                     g.setColor(colour);
                     g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight()); // Fills key square
-
                     g.setColor(Color.black); // Set black for border
                     g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight()); // Draw key border
                 }
