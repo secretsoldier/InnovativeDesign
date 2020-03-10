@@ -15,6 +15,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import PieChartPack.NPieChart;
 import PieChartPack.NPieChartC;
+import createfolder.CreateFolder;
 
 /**
  *
@@ -39,7 +40,9 @@ public class InnovativeDesign {
         menuBar.addMenu("File");  // 0
         menuBar.addMenu("Tools"); // 1
         menuBar.add(0, "Exit", (ActionEvent e) -> {frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));});
-
+        
+        menuBar.add(1, "Create Folder", (ActionEvent e) -> {CreateFolder.createFolder(frame);});
+        
         JInternalFrame searchIFrame = new SearchIFrame();{ // This initlises Search Frame
         menuBar.add(1, "Search", searchIFrame); // This adds it to the Menu Bar
         layer.add(searchIFrame, JLayeredPane.DEFAULT_LAYER);} // This adds it to the Virtual Desktop
@@ -55,8 +58,8 @@ public class InnovativeDesign {
             layer.add(iframe, JLayeredPane.DEFAULT_LAYER);
         }
 
-        JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"A://\"");
-        NPieChartC pi = NPieChart.createPieChartJComponent(new File("/A:/"));
+        JInternalFrame pieChartIFrame = new JInternalFrame("Pie Chart: \"H://\"");
+        NPieChartC pi = NPieChart.createPieChartJComponent(new File("/H:/"));
         pieChartIFrame.add(pi, BorderLayout.CENTER);
         pieChartIFrame.setSize(500, 250);
         pieChartIFrame.setResizable(true);
