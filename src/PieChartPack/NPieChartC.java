@@ -15,42 +15,47 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
     private final ArrayList<NPieChartObj> fileList = new ArrayList<>();
     private JComponent chart, key;
 
-    public NPieChartC(Map<String, NPieChartObj> map){
-        fileList.addAll(map.values());
+    public NPieChartC(Map<String, NPieChartObj> map){ // Constructor
+        fileList.addAll(map.values()); // Adds all the extension data into the ArrayList "filelist"
         
-        JComponent pieChart = new ChartG(), keyChart = new KeyG();
+        JComponent  pieChart = new ChartG(), // Declares the Pie Chart component
+                    keyChart = new KeyG();   // Declares the Key component
 
         this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2)); // Creates padding around the pie chart components
-        this.setLayout(new GridLayout(0, 2, 25, 0)); // Splits the frame in half
+        this.setLayout(new GridLayout(0, 2, 25, 0)); // Splits the frame in half with the GridLayout layout manager
 
         this.add(pieChart);
         this.add(keyChart);
     }
 
-    private class ChartG extends JComponent { // Stands for Pie Chart Graphic, this will be the actual pie chart
+    private class ChartG extends JComponent { // This component paints the Pie Chart graphics
+
+        private double totalSpace = 0; // Total space of the file extensions
+        {
+            for (NPieChartObj obj : fileList) { // Loops through the file extensions and adds to "totalSpace"
+                totalSpace += obj.extensionTotalLength;
+            }
+        }
 
         @Override
         public void paint(Graphics g) {
-            super.paint(g);
+            super.paint(g); // Calls JComponent's paint method
 
-            double totalSpace = 0;
-            for (NPieChartObj obj : fileList) { // Finds the total space taken by the files in the list
-                totalSpace += obj.extensionTotalLength;
-            }
-
+            // Pie Chart //
             int pos = 90; // Starts pos at 90 so the arcs get drawn from the top center of the pie chart
             for (NPieChartObj obj : fileList) {
-
                 g.setColor(obj.segmentColour);
-                if (obj.equals(fileList.get(fileList.size() - 1))){
-                    g.fillArc(this.getX(), this.getY(), this.getWidth(), this.getHeight(), pos, 450-pos); // 450 is 360 plus the initial 90, this is to fix weird rounding bug
+
+                if (obj.equals(fileList.get(fileList.size() - 1))){ // Checks if paint is drawing the last segment of the Pie Chart
+                    g.fillArc(this.getX(), this.getY(), this.getWidth(), this.getHeight(), pos, 450-pos); // Fills in remaining space, fix for white space in Pie Chart
                 } else {
-                    g.fillArc(this.getX(), this.getY(), this.getWidth(), this.getHeight(), pos, (int)(obj.extensionTotalLength /(totalSpace/360)));
-                } // Segment of pie chart
+                    g.fillArc(this.getX(), this.getY(), this.getWidth(), this.getHeight(), pos, (int)(obj.extensionTotalLength / (totalSpace/360)) ); // Segment of pie chart
+                }
 
                 pos += (obj.extensionTotalLength / totalSpace)*360;
             }
 
+            // Border //
             g.setColor(Color.black); // Set colour for border
             for (int i = 0; i < 4; i++) {
                 g.drawOval(this.getX() - i , this.getY() - i, this.getWidth() + i + i, this.getHeight() + i + i); // Draw border for pie chart
@@ -58,35 +63,36 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
         }
     }
 
-    private class KeyG extends JPanel { // Stands for Key Graphics, this will be the key for the pie chart
+    private class KeyG extends JPanel { // Key component for Pie Chart
 
-        private class KeyComponent extends JPanel { // This holds the key colour and the key text
+        private class KeyColourComponent extends JComponent { // This is the component showing the segment colour for the Key
+            private final Color colour; // Colour of the box
 
-            private class KeyColourComponent extends JComponent { // This is the key colour square
-                private final Color colour;
+            public KeyColourComponent(Color colour){
+                this.colour = colour;
 
-                public KeyColourComponent(Color colour){
-                    this.colour = colour;
+                // This is to limit the size of the boxes to 10 by 10 pixels
+                //this.setMaximumSize(new Dimension(10, 10));
+                //this.setMinimumSize(new Dimension(10, 10));
+                //this.setPreferredSize(new Dimension(10, 10));
 
-                    // This is to limit the size of the boxes to 10 by 10 pixels
-                    //this.setMaximumSize(new Dimension(10, 10));
-                    //this.setMinimumSize(new Dimension(10, 10));
-                    //this.setPreferredSize(new Dimension(10, 10));
-
-                    this.setAlignmentY(Component.CENTER_ALIGNMENT);
-                }
-
-                @Override
-                public void paint(Graphics g) {
-                    super.paint(g);
-                    g.setColor(colour);
-                    g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight()); // Fills key square
-
-                    g.setColor(Color.black); // Set black for border
-                    g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight()); // Draw key border
-                }
+                this.setAlignmentY(Component.CENTER_ALIGNMENT);
             }
 
+            @Override
+            public void paint(Graphics g) {
+                super.paint(g);
+                // Colour square //
+                g.setColor(colour); // Colour of the component
+                g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight()); // Fills key square
+
+                // Border //
+                g.setColor(Color.black); // Set black for border
+                g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight()); // Draw key border
+            }
+        }
+
+        private class KeyComponent extends JPanel { // Component that holds the coloured square and the label
             private final JLabel keyString;
             private final KeyColourComponent colourBox;
 

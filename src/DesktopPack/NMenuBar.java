@@ -37,7 +37,7 @@ public class NMenuBar extends JMenuBar {
         iframe.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE); // Makes it not visible on close
         iframe.setVisible(false); // Sets the parameter "iframe" not visible
     }
-    public void add(int menu, String name, ActionListener action){ // Adds Items to declared Menus, look to first "add" for comments
+    public void add(int menu, String name, ActionListener action){ // Adds Items to declared Menus, look to initial "add" for comments
         JMenuItem frameMenuItem = new JMenuItem(name);
         frameMenuItem.setVisible(true);
         frameMenuItem.addActionListener(action);
