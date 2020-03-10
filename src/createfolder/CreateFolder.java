@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 package createfolder;
+import java.awt.Component;
 import java.io.*;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 /**
  *
  * @author 17067582
@@ -15,16 +18,15 @@ public class CreateFolder {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void createFolder(Component component) {
         boolean success= false;
-        Scanner io = new Scanner(System.in);
-            System.out.println("enter the folder name:");
+        String nameOfFolder = JOptionPane.showInputDialog("Name of folder");
         while (!success){
             
-            String name = io.nextLine();
-            File f = new File("H:\\"+name);
+            File f = new File("H:\\"+nameOfFolder);
         
             if (f.mkdirs()){
+                JOptionPane.showMessageDialog(component, String.format("\"%s\" has been created!", nameOfFolder));
                 System.out.println("Directory is created.");
                 success = true;
             }
