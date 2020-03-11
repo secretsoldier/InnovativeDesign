@@ -18,7 +18,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author 18074751
  */
-public class FileTable extends JTable {
+public class FileTable extends JTable { // TODO Add mouse hover effects and improve appearance
     public FileTable(AbstractFileTableModel fileTableModel, Component parent){
         super(fileTableModel);
         this.setRowSelectionAllowed(true);

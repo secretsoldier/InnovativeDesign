@@ -12,7 +12,9 @@ import javax.swing.*;
  * @author 18074751
  */
 public class NLayered extends JLayeredPane {
-    private DesktopManager desktopManager;
+    private DesktopManager desktopManager; // TODO Allow frames to Minimise
+    public final int DEFAULT_LAYER = JLayeredPane.DEFAULT_LAYER;
+    public final int POPUP = JLayeredPane.POPUP_LAYER;
     
     public NLayered(){
         super();
