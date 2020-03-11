@@ -13,13 +13,22 @@ public class FileTableMouseActions extends MouseAdapter {
         this.parent = parent;
     }
 
+    private File fileAtCursor(MouseEvent e){
+        FileTable table = (FileTable)e.getSource();
+        int row = table.rowAtPoint(e.getPoint());
+        return table.getValueAt(row);
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        FileTable table = (FileTable)e.getSource(); File selectedFile = table.getValueAt(table.getSelectedRow());
+        FileTable table = (FileTable)e.getSource(); File selectedFile = fileAtCursor(e);
 
         if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2){ // Double click
             if (selectedFile.isDirectory()) {
-                ((DefaultFileTableModel) table.getModel()).setRoot(selectedFile);
+                if (table.getModel().getType().equals(DefaultFileTableModel.TYPE))
+                    ((DefaultFileTableModel) table.getModel()).addRoot(selectedFile);
+                else
+                    table.setModel(new DefaultFileTableModel(selectedFile));
             } else if (selectedFile.isFile()){
                 try {
                     Desktop.getDesktop().open(selectedFile);
@@ -27,7 +36,14 @@ public class FileTableMouseActions extends MouseAdapter {
                     System.err.printf("%s\n", exc.getLocalizedMessage());
                 }
             }
-        } else if (e.getButton() == MouseEvent.BUTTON3){ // Right click menu
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        File selectedFile = fileAtCursor(e);
+
+        if (e.getButton() == MouseEvent.BUTTON3){ // Right click menu
             class FileContext extends JPopupMenu{
                 JMenuItem rename = new JMenuItem("Rename"), delete = new JMenuItem("Delete");{
                     rename.addActionListener((ActionEvent e) -> {
@@ -36,9 +52,9 @@ public class FileTableMouseActions extends MouseAdapter {
                         ((JTextField) message).setText(selectedFile.getName());
                         int result = JOptionPane.showConfirmDialog(parent, message, "Rename", JOptionPane.YES_NO_OPTION);
                         if (result == JOptionPane.YES_OPTION){
-                            String[] path = selectedFile.getPath().split(".*[\\]");
-                            if (!selectedFile.renameTo(new File(path[0] + ((JTextField) message).getText()))) {
-                                    JOptionPane.showMessageDialog(parent, "Renaming has been unsuccessful", "Error", JOptionPane.ERROR_MESSAGE);
+                            String path = selectedFile.getParentFile().getPath();
+                            if (!selectedFile.renameTo(new File(path + ((JTextField) message).getText()))) {
+                                JOptionPane.showMessageDialog(parent, "Renaming has been unsuccessful", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                             System.out.printf("\"%s\" has been renamed to \"%s\"\n", selectedFile.getName(), ((JTextField) message).getText());
                         }

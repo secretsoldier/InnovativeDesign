@@ -14,10 +14,15 @@ import java.io.File;
  * @author 18074751
  */
 public class FileExplorerFrame extends JInternalFrame {
-    public FileExplorerFrame(){
-        super("File Explorer", true, true, true, true);
-        this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
-        this.setSize(500, 500);
-        this.add( new FileTablePanel( new DefaultFileTableModel( new File("/H:/") ) , this), BorderLayout.CENTER);
+    FileTablePanel tablePanel;
+
+    public FileExplorerFrame(String name, AbstractFileTableModel tableModel){
+        super(name);
+        tablePanel = new FileTablePanel( tableModel , this);
+        this.add( tablePanel, BorderLayout.CENTER);
+    }
+
+    public AbstractFileTableModel getModel(){
+        return tablePanel.getModel();
     }
 }
