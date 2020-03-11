@@ -19,7 +19,9 @@ public interface ISearchListener {
      * @param type
      * @param searchString
      */
-    default public void SearchBegin(Search.SearchType type, String searchString){};
+    default void SearchBegin(Search.SearchType type, String searchString){
+
+    };
 
     /**
      *
@@ -27,11 +29,15 @@ public interface ISearchListener {
      * @param active
      * @return
      */
-    default public boolean SearchUpdate(File result, boolean active){return active;};
+    default boolean SearchUpdate(File result, boolean active){
+        return true;
+    };
 
     /**
      *
      * @param results
      */
-    default public void SearchEnd(ArrayList<File> results){};
+    default void SearchEnd(ArrayList<File> results){
+
+    };
 }

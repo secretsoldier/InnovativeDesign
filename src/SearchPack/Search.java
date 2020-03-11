@@ -22,13 +22,12 @@ public class Search {
         listeners.add(listener);
     }
     public enum SearchType {
+        both,
         byFile,
         byDirect
     }
     private void fireSearchBegin(Search.SearchType type, String searchString){
-        listeners.forEach((e) -> {
-            e.SearchBegin(type, searchString);
-        });
+        listeners.forEach((e) -> e.SearchBegin(type, searchString));
     }
     private boolean fireSearchUpdate(File results){
         for (ISearchListener e : listeners)
@@ -37,43 +36,65 @@ public class Search {
         return false;
     }
     private void fireSearchEnd(ArrayList<File> results){
-        listeners.forEach((e) -> {
-            e.SearchEnd(results);
-        });
+        listeners.forEach((e) -> e.SearchEnd(results));
     }
     
     public ArrayList<File> byFile(String name, boolean inDirectories){
         FileIterator files = new FileIterator(root, inDirectories);
-        ArrayList<File> results = new ArrayList();
+        ArrayList<File> results = new ArrayList<>();
         this.fireSearchBegin(SearchType.byFile, name); // Event start
+
         while (files.hasNext()){
             File file = files.next();
             if (file.isFile() && file.getName().contains(name)){
                 results.add(file);
                 if (this.fireSearchUpdate(file)){ // Event update
-                    this.fireSearchEnd(results); // Search will stop if event is returned to hault the search
+                    this.fireSearchEnd(results); // Search will stop if event is returned to halt the search
                     return results.isEmpty() ? null : results;
                 }
             }
         }
+
         this.fireSearchEnd(results); // Event end
         return results.isEmpty() ? null : results;
     }
     
     public ArrayList<File> byDirectory(String name, boolean inDirectories){
         FileIterator files = new FileIterator(root, inDirectories);
-        ArrayList<File> results = new ArrayList();
+        ArrayList<File> results = new ArrayList<>();
         this.fireSearchBegin(SearchType.byDirect, name); // Event start
+
         while (files.hasNext()){
             File file = files.next();
             if (file.isDirectory() && file.getName().contains(name)){
                 results.add(file);
                 if (this.fireSearchUpdate(file)){ // Event update
-                    this.fireSearchEnd(results); // Search will stop if event is returned to hault the search
+                    this.fireSearchEnd(results); // Search will stop if event is returned to halt the search
                     return results.isEmpty() ? null : results;
                 }
             }
         }
+
+        this.fireSearchEnd(results); // Event end
+        return results.isEmpty() ? null : results;
+    }
+
+    public ArrayList<File> byBoth(String name, boolean inDirectories){
+        FileIterator files = new FileIterator(root, inDirectories);
+        ArrayList<File> results = new ArrayList<>();
+        this.fireSearchBegin(SearchType.both, name); // Event start
+
+        while (files.hasNext()){
+            File file = files.next();
+            if (file.getName().contains(name)){
+                results.add(file);
+                if (this.fireSearchUpdate(file)){
+                    this.fireSearchEnd(results);
+                    return results.isEmpty() ? null : results;
+                }
+            }
+        }
+
         this.fireSearchEnd(results); // Event end
         return results.isEmpty() ? null : results;
     }
