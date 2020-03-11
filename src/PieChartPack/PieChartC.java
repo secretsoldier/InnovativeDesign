@@ -69,9 +69,9 @@ public class PieChartC extends JComponent { // Stands for Nebula Pie Chart Compo
                     this.colour = colour;
 
                     // This is to limit the size of the boxes to 10 by 10 pixels
-                    //this.setMaximumSize(new Dimension(10, 10));
-                    //this.setMinimumSize(new Dimension(10, 10));
-                    //this.setPreferredSize(new Dimension(10, 10));
+                    this.setMaximumSize(new Dimension(10, 10));
+                    this.setMinimumSize(new Dimension(10, 10));
+                    this.setPreferredSize(new Dimension(10, 10));
 
                     this.setAlignmentY(Component.CENTER_ALIGNMENT);
                 }
@@ -90,9 +90,20 @@ public class PieChartC extends JComponent { // Stands for Nebula Pie Chart Compo
             private final JLabel keyString;
             private final KeyColourComponent colourBox;
 
+            private String humanReadableByteCountBin(long bytes) {
+                long b = bytes == Long.MIN_VALUE ? Long.MAX_VALUE : Math.abs(bytes);
+                return b < 1024L ? bytes + " B"
+                        : b <= 0xfffccccccccccccL >> 40 ? String.format("%.1f KB", bytes / 0x1p10)
+                        : b <= 0xfffccccccccccccL >> 30 ? String.format("%.1f MB", bytes / 0x1p20)
+                        : b <= 0xfffccccccccccccL >> 20 ? String.format("%.1f GB", bytes / 0x1p30)
+                        : b <= 0xfffccccccccccccL >> 10 ? String.format("%.1f TB", bytes / 0x1p40)
+                        : b <= 0xfffccccccccccccL ? String.format("%.1f PB", (bytes >> 10) / 0x1p40)
+                        : String.format("%.1f EB", (bytes >> 20) / 0x1p40);
+            } // Taken from StackOverflow
+
             public KeyComponent(PieChartObj info){
                 colourBox = new KeyColourComponent(info.segmentColour);
-                this.keyString = new JLabel(info.extension + "  -  " + (double)info.extensionTotalLength /1024 + "/kb");
+                this.keyString = new JLabel(String.format("%s - %s", info.extension, humanReadableByteCountBin(info.extensionTotalLength)));
                 this.keyString.setAlignmentY(Component.CENTER_ALIGNMENT);
 
                 this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
