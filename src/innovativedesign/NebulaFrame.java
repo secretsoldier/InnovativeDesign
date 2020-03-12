@@ -44,6 +44,7 @@ public class NebulaFrame {
     }
     public void addTempInternalFrame(JInternalFrame iFrame){
         layer.add(iFrame, layer.DEFAULT_LAYER);
+        iFrame.setVisible(true);
     }
 
     // Default Internal Frames Declaration //
@@ -53,9 +54,9 @@ public class NebulaFrame {
             new SearchInternalFrame() // Search Frame: 2
     };
     { // Internal Frames Properties //
-        JInternalFrame  test            = defaultInternalFrames[0],
-                        pieChart        = defaultInternalFrames[1],
-                        search          = defaultInternalFrames[2];
+        JInternalFrame  test     = defaultInternalFrames[0],
+                        pieChart = defaultInternalFrames[1],
+                        search   = defaultInternalFrames[2];
 
         // Test Frame Properties //
         test.setVisible(true);

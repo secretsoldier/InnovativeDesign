@@ -5,14 +5,12 @@ import innovativedesign.InnovativeDesign;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
-public class SearchInternalFrame extends JInternalFrame { // TODO fix weird bug that stops the frame from showing
+public class SearchInternalFrame extends JInternalFrame {
     private final JTextField searchBox = new JTextField();
-    private final JButton searchButton = new JButton();{ // TODO Have the cancel button replace the search button when searching
-        searchButton.setText("Search");
-    }
+    private JButton searchButton = new JButton();
     private final JCheckBox[] searchProperties = {
             new JCheckBox(), // Search in directories property: 0
             new JCheckBox(), // Search for only files: 1
@@ -79,6 +77,7 @@ public class SearchInternalFrame extends JInternalFrame { // TODO fix weird bug 
     }
     private final JSeparator separator = new JSeparator();
 
+    // Frame layout //
     {
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,29 +114,59 @@ public class SearchInternalFrame extends JInternalFrame { // TODO fix weird bug 
                                         .addComponent(searchProperties[2]))
         ));
         pack();
+    }
 
-        searchButton.addActionListener((ActionEvent e) ->{
-            SearchFileTableModel searchResultModel = new SearchFileTableModel();
-            InnovativeDesign.Main.addTempInternalFrame(new FileExplorerFrame("Search Results", searchResultModel));
-            Search search = new Search(InnovativeDesign.Main.getExplorerModel().getCurrentRoot());
-            search.addListener(searchResultModel);
-            if (searchProperties[1].isSelected() && searchProperties[2].isSelected()){ // Search for both files and directories
-                search.byBoth(searchBox.getText().trim(), searchProperties[0].isSelected());
-            } else if (searchProperties[1].isSelected()){ // Search for just files
-                search.byFile(searchBox.getText().trim(), searchProperties[0].isSelected());
-            } else { // Search for just directories
-                search.byDirectory(searchBox.getText().trim(), searchProperties[0].isSelected());
+    // Search activation //
+    private SearchFileTableModel searchResultModel;
+    private class SearchAction implements ActionListener {
+        public void actionPerformed(){
+            String searchString = searchBox.getText().trim();
+
+            if (!searchString.isEmpty()) {
+                searchResultModel = new SearchFileTableModel(searchBox);
+                FileExplorerFrame searchResultFrame = new FileExplorerFrame(String.format("Search Results - \"%s\"", searchString), searchResultModel);
+                InnovativeDesign.Main.addTempInternalFrame(searchResultFrame);
+                Search search = new Search(InnovativeDesign.Main.getExplorerModel().getCurrentRoot());
+                search.addListener(searchResultModel);
+
+                if (searchProperties[1].isSelected() && searchProperties[2].isSelected()) { // Search for both files and directories
+                    //search.byBoth(searchString, searchProperties[0].isSelected());
+                } else if (searchProperties[1].isSelected()) { // Search for just files
+                    search.byFile(searchString, searchProperties[0].isSelected());
+                } else { // Search for just directories
+                    search.byDirectory(searchString, searchProperties[0].isSelected());
+                }
+
+                searchButton.setText("Cancel");
+                searchButton.addActionListener(new CancelAction());
+            }
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            actionPerformed();
+        }
+    }
+    private class CancelAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            searchResultModel.CancelSearch();
+
+            searchButton.setText("Search");
+            searchButton.addActionListener(new SearchAction());
+        }
+    }
+    {
+        searchButton.setText("Search");
+        searchButton.addActionListener(new SearchAction());
+
+        searchBox.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                    new SearchAction().actionPerformed();
+                }
             }
         });
-    }
-
-    @Override
-    public void setSize(Dimension d) {
-
-    }
-
-    @Override
-    public void setSize(int width, int height) {
-
     }
 }

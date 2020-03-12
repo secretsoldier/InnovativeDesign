@@ -10,7 +10,7 @@ public class DefaultFileTableModel extends AbstractFileTableModel {
         return TYPE;
     }
 
-    private class RootHistory {
+    private static class RootHistory {
         public File data;
         public RootHistory  last = null,
                             next = null;
@@ -32,7 +32,7 @@ public class DefaultFileTableModel extends AbstractFileTableModel {
     private void loadRoot(){
         emptyModel();
         new Thread(() -> {
-            for (File file : Objects.requireNonNull(this.root.data.listFiles())){
+            for (File file : this.root.data.listFiles()){
                 this.addFile(file);
             }
         }).start();
