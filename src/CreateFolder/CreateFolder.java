@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package createfolder;
+package CreateFolder;
 import java.awt.Component;
 import java.io.*;
-import java.util.Scanner;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+
 /**
  *
  * @author 17067582

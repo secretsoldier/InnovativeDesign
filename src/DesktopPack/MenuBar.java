@@ -16,9 +16,9 @@ import javax.swing.JMenuItem;
  *
  * @author 18074751
  */
-public class NMenuBar extends JMenuBar {
+public class MenuBar extends JMenuBar {
     
-    public NMenuBar(){
+    public MenuBar(){
         super();
     } // Constructor
     

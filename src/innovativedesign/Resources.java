@@ -1,9 +1,8 @@
 package innovativedesign;
 
 public class Resources {
-    static private ClassLoader classLoader = Resources.class.getClassLoader();
     public static java.net.URL getResourceURL(String filename){
-        java.net.URL resource = classLoader.getResource(filename);
+        java.net.URL resource = Resources.class.getClassLoader().getResource(filename);
         if (resource == null){
             throw new IllegalArgumentException(String.format("Resource \"%s\" is not found.", filename));
         } else {
