@@ -14,7 +14,7 @@ import java.util.Queue;
  *
  * @author 18074751
  */
-public class FileIterator implements Iterator {
+public class FileIterator implements Iterator { // TODO Redesign class to straighten out errors and incorporate some way of measuring progress
         private final boolean inDirectories;
         final private Queue<File> directories = new LinkedList(), subjects = new LinkedList();
         

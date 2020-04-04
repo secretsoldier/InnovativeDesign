@@ -8,7 +8,7 @@ import FileExplorer.FileExplorerFrame;
 import FileExplorer.FileTablePanel;
 import PieChartPack.PieChart;
 import PieChartPack.PieChartC;
-//import SearchPack.SearchInternalFrame;
+import SearchPack.SearchInternalFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,12 +54,12 @@ public class NebulaFrame {
     private final JInternalFrame[] defaultInternalFrames = {
             new JInternalFrame("Test"), // Test Frame: 0
             new JInternalFrame("Pie Chart: \"C://\""), // Pie Chart Frame: 1
-            //new SearchInternalFrame() // Search Frame: 2
+            new SearchInternalFrame() // Search Frame: 2
     };
     { // Internal Frames Properties //
         JInternalFrame  test     = defaultInternalFrames[0],
-                        pieChart = defaultInternalFrames[1];
-                        //search   = defaultInternalFrames[2];
+                        pieChart = defaultInternalFrames[1],
+                        search   = defaultInternalFrames[2];
 
         // Test Frame Properties //
         test.setVisible(true);
@@ -80,9 +80,9 @@ public class NebulaFrame {
         addInternalFrame("Pie Chart - \"C:\\\"", TOOLS, pieChart);
 
         // Search Properties //
-        //search.setClosable(true);
-        //search.setFrameIcon(Resources.getIcon("SpaceMonitoring.png"));
-        //addInternalFrame("Search", TOOLS, search);
+        search.setClosable(true);
+        search.setFrameIcon(Resources.getIcon("SpaceMonitoring.png"));
+        addInternalFrame("Search", TOOLS, search);
     } // Default Internal Frame's Properties
     private final FileExplorerFrame fileExplorer = new FileExplorerFrame("File Explorer", new DefaultFileTableModel(new File("C:\\")));{
         fileExplorer.setClosable(true);
