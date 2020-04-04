@@ -4,6 +4,7 @@ import DesktopPack.MenuBar;
 import DesktopPack.NLayered;
 import FileExplorer.DefaultFileTableModel;
 import FileExplorer.FileExplorerFrame;
+import FileExplorer.FileTablePanel;
 import PieChartPack.PieChart;
 import PieChartPack.PieChartC;
 import SearchPack.SearchInternalFrame;
@@ -89,7 +90,12 @@ public class NebulaFrame {
         fileExplorer.setSize(500, 500);
         addInternalFrame("File Explorer", TOOLS, fileExplorer);
     } // File Explorer Properties //
+    
     public DefaultFileTableModel getExplorerModel(){
         return (DefaultFileTableModel) fileExplorer.getModel();
+    }
+    
+    public FileTablePanel getExplorerPanel() {
+        return fileExplorer.getTablePanel();
     }
 }

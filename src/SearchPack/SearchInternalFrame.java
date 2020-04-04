@@ -1,11 +1,13 @@
 package SearchPack;
 
 import FileExplorer.FileExplorerFrame;
+import FileExplorer.FileTable;
 import innovativedesign.InnovativeDesign;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.ArrayList;
 
 public class SearchInternalFrame extends JInternalFrame {
@@ -123,14 +125,18 @@ public class SearchInternalFrame extends JInternalFrame {
             String searchString = searchBox.getText().trim();
 
             if (!searchString.isEmpty()) {
-                searchResultModel = new SearchFileTableModel(searchBox);
-                FileExplorerFrame searchResultFrame = new FileExplorerFrame(String.format("Search Results - \"%s\"", searchString), searchResultModel);
-                InnovativeDesign.Main.addTempInternalFrame(searchResultFrame);
-                Search search = new Search(InnovativeDesign.Main.getExplorerModel().getCurrentRoot());
+                searchResultModel = new SearchFileTableModel(null, () -> {
+                    searchButton.setText("Search");
+                    searchButton.addActionListener(new SearchAction());
+                });
+                File searchRoot = InnovativeDesign.Main.getExplorerModel().getCurrentRoot();
+                Search search = new Search(searchRoot);
                 search.addListener(searchResultModel);
+                FileTable fileTable = new FileTable(searchResultModel, null);
+                InnovativeDesign.Main.getExplorerPanel().addExplorerTab(String.format("\"%s\" in \"%s\"", searchString, searchRoot.getPath()), fileTable);
 
                 if (searchProperties[1].isSelected() && searchProperties[2].isSelected()) { // Search for both files and directories
-                    //search.byBoth(searchString, searchProperties[0].isSelected());
+                    search.byBoth(searchString, searchProperties[0].isSelected());
                 } else if (searchProperties[1].isSelected()) { // Search for just files
                     search.byFile(searchString, searchProperties[0].isSelected());
                 } else { // Search for just directories
@@ -162,7 +168,7 @@ public class SearchInternalFrame extends JInternalFrame {
 
         searchBox.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) {
+            public void keyPressed(KeyEvent e) { // Execute button when "Enter" is pressed on the keyboard
                 if (e.getKeyCode() == KeyEvent.VK_ENTER){
                     new SearchAction().actionPerformed();
                 }

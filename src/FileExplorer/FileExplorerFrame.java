@@ -25,4 +25,8 @@ public class FileExplorerFrame extends JInternalFrame {
     public AbstractFileTableModel getModel(){
         return tablePanel.getModel();
     }
+    
+    public FileTablePanel getTablePanel() {
+        return tablePanel;
+    }
 }

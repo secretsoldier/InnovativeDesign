@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author 18074751
  */
-public class Search {
+public class Search { // TODO Fix search function; error prone
     private final File root;
     
     public Search(File file){
@@ -26,8 +26,8 @@ public class Search {
         byFile,
         byDirect
     }
-    private void fireSearchBegin(Search.SearchType type, String searchString){
-        listeners.forEach((e) -> e.SearchBegin(type, searchString));
+    private void fireSearchBegin(Search.SearchType type, String searchString, File directory, boolean subfolders){
+        listeners.forEach((e) -> e.SearchBegin(type, searchString, directory, subfolders));
     }
     private boolean fireSearchUpdate(File results){
         for (ISearchListener e : listeners)
@@ -42,7 +42,7 @@ public class Search {
     public ArrayList<File> byFile(String name, boolean inDirectories){
         FileIterator files = new FileIterator(root, inDirectories);
         ArrayList<File> results = new ArrayList<>();
-        this.fireSearchBegin(SearchType.byFile, name); // Event start
+        this.fireSearchBegin(SearchType.byFile, name, root, inDirectories); // Event start
 
         while (files.hasNext()){
             File file = files.next();
@@ -62,7 +62,7 @@ public class Search {
     public ArrayList<File> byDirectory(String name, boolean inDirectories){
         FileIterator files = new FileIterator(root, inDirectories);
         ArrayList<File> results = new ArrayList<>();
-        this.fireSearchBegin(SearchType.byDirect, name); // Event start
+        this.fireSearchBegin(SearchType.byDirect, name, root, inDirectories); // Event start
 
         while (files.hasNext()){
             File file = files.next();
@@ -82,7 +82,7 @@ public class Search {
     public ArrayList<File> byBoth(String name, boolean inDirectories){
         FileIterator files = new FileIterator(root, inDirectories);
         ArrayList<File> results = new ArrayList<>();
-        this.fireSearchBegin(SearchType.both, name); // Event start
+        this.fireSearchBegin(SearchType.both, name, root, inDirectories); // Event start
 
         while (files.hasNext()){
             File file = files.next();

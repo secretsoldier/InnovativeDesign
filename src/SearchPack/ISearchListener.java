@@ -19,7 +19,7 @@ public interface ISearchListener {
      * @param type
      * @param searchString
      */
-    default void SearchBegin(Search.SearchType type, String searchString){
+    default void SearchBegin(Search.SearchType type, String searchString, File directory, boolean subfolders){
 
     };
 

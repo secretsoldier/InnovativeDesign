@@ -29,7 +29,7 @@ public class NLayered extends JLayeredPane {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JLayeredPane.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NLayered.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
 
