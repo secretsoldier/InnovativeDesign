@@ -11,11 +11,11 @@ import java.util.Map;
  * @author 18074751
  */
 
-public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Component; Copied and altered from MyCanvas.java
-    private final ArrayList<NPieChartObj> fileList = new ArrayList<>();
+public class PieChartC extends JComponent { // Stands for Nebula Pie Chart Component; Copied and altered from MyCanvas.java
+    private final ArrayList<PieChartObj> fileList = new ArrayList<>();
     private JComponent chart, key;
 
-    public NPieChartC(Map<String, NPieChartObj> map){ // Constructor
+    public PieChartC(Map<String, PieChartObj> map){ // Constructor
         fileList.addAll(map.values()); // Adds all the extension data into the ArrayList "filelist"
         
         JComponent  pieChart = new ChartG(), // Declares the Pie Chart component
@@ -32,7 +32,7 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
 
         private double totalSpace = 0; // Total space of the file extensions
         {
-            for (NPieChartObj obj : fileList) { // Loops through the file extensions and adds to "totalSpace"
+            for (PieChartObj obj : fileList) { // Loops through the file extensions and adds to "totalSpace"
                 totalSpace += obj.extensionTotalLength;
             }
         }
@@ -43,7 +43,7 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
 
             // Pie Chart //
             int pos = 90; // Starts pos at 90 so the arcs get drawn from the top center of the pie chart
-            for (NPieChartObj obj : fileList) {
+            for (PieChartObj obj : fileList) {
                 g.setColor(obj.segmentColour);
 
                 if (obj.equals(fileList.get(fileList.size() - 1))){ // Checks if paint is drawing the last segment of the Pie Chart
@@ -96,7 +96,7 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
             private final JLabel keyString;
             private final KeyColourComponent colourBox;
 
-            public KeyComponent(NPieChartObj info){
+            public KeyComponent(PieChartObj info){
                 colourBox = new KeyColourComponent(info.segmentColour);
                 this.keyString = new JLabel(info.extension + "  -  " + (double)info.extensionTotalLength /1024 + "/kb");
                 this.keyString.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -115,7 +115,7 @@ public class NPieChartC extends JComponent { // Stands for Nebula Pie Chart Comp
         public KeyG(){
             this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
             
-            for (NPieChartObj obj : fileList){
+            for (PieChartObj obj : fileList){
                 this.add(new KeyComponent(obj));
                 this.add(Box.createRigidArea(new Dimension(0, 5)));
             }
