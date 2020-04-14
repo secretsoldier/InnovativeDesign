@@ -1,6 +1,5 @@
 package innovativedesign;
 
-import CreateFolder.CreateFolder;
 import DesktopPack.MenuBar;
 import DesktopPack.NLayered;
 import FileExplorer.DefaultFileTableModel;
@@ -37,7 +36,6 @@ public class NebulaFrame {
     public final int TOOLS = menuBar.addMenu("Tools"); // 1
     { // Default Menu Bar Items //
         menuBar.add(FILE, "Exit", (ActionEvent e) -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
-        menuBar.add(1, "Create Folder", (ActionEvent e) -> CreateFolder.createFolder(frame));
     } // Default Menu Bar Items
 
     // Main Frame Methods //
