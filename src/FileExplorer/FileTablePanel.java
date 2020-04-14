@@ -1,6 +1,7 @@
 package FileExplorer;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -90,11 +91,12 @@ public class FileTablePanel extends JPanel {
     public FileTablePanel(AbstractFileTableModel tableModel, Component parent){
         table = new FileTable(tableModel, parent);
         JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBorder(new EmptyBorder(0,0,0,0));
         tabbedPane.addTab(((DefaultFileTableModel)table.getModel()).getCurrentRoot().getPath(), scrollPane);
         this.add(tabbedPane);
     }
     
-    public void addExplorerTab(String title, FileTable table) {
+    public void addTab(String title, FileTable table) {
         JScrollPane scrollPane = new JScrollPane(table);
         tabbedPane.addTab(title, scrollPane);
     }

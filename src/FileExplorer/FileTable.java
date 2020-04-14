@@ -5,12 +5,13 @@
  */
 package FileExplorer;
 
-import java.awt.Component;
+import java.awt.*;
 import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import javax.swing.*;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.TableCellRenderer;
 
@@ -22,7 +23,30 @@ public class FileTable extends JTable { // TODO Add mouse hover effects and impr
     public FileTable(AbstractFileTableModel fileTableModel, Component parent){
         super(fileTableModel);
         this.setRowSelectionAllowed(true);
+        this.setColumnSelectionAllowed(false);
         this.createDefaultColumnsFromModel();
+        this.setFocusable(false);
+        this.setRowHeight(20);
+        this.setRowMargin(3);
+        this.setShowVerticalLines(false);
+        this.setShowHorizontalLines(false);
+        this.setGridColor(Color.lightGray);
+        this.tableHeader.setReorderingAllowed(false);
+        this.tableHeader.setOpaque(false);
+        this.tableHeader.setBackground(Color.WHITE);
+        this.tableHeader.setBorder(new AbstractBorder() {
+            @Override
+            public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+                g.setColor(Color.GRAY);
+                g.drawLine(x, y + height - 3, x + width, y + height - 3);
+            }
+    
+            @Override
+            public Insets getBorderInsets(Component c, Insets insets) {
+                insets.set(0,0,1,0);
+                return super.getBorderInsets(c, insets);
+            }
+        });
         this.addMouseListener(new FileTableMouseActions(parent));
     }
 
@@ -30,47 +54,52 @@ public class FileTable extends JTable { // TODO Add mouse hover effects and impr
     public AbstractFileTableModel getModel() {
         return (AbstractFileTableModel)super.getModel();
     }
-
-    private static class NameCellRenderer implements TableCellRenderer {
-        private FileSystemView fileSystemView = FileSystemView.getFileSystemView();
-        private Map<String, Icon> iconMap = new HashMap<>();
-
+    
+    private static class DefaultCellRenderer extends JLabel implements TableCellRenderer {
+    
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            new Thread(() -> {
-                if (!iconMap.containsKey(((File)value).getName())) {
-                    iconMap.put(((File) value).getName(), fileSystemView.getSystemIcon(((File) value)));
-                    table.repaint();
-                }
-            }).start();
-            return new JLabel() {
-                @Override
-                public String getText() {
-                    return ((File)value).getName();
-                }
-
-                @Override
-                public Icon getIcon() {
-                    return iconMap.get(((File)value).getName());
-                }
-            };
-        }
-
-        public final void clearIconMap(){
-            iconMap.clear();
+            if (isSelected)
+                this.setBackground(Color.blue);
+            else
+                this.setBackground(Color.WHITE);
+            return this;
         }
     }
 
-    private static class DateModifiedCellRenderer implements TableCellRenderer {
+    private static class NameCellRenderer extends DefaultCellRenderer {
+        private int hash = -1;
+        private Map<String, Icon> iconMap = new Hashtable<>();
+
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            return new JLabel() {
-                @Override
-                public String getText() {
-                    Date date = new Date(Long.parseLong(String.valueOf(((File)value).lastModified())));
-                    return date.toGMTString();
-                }
-            };
+            if (hash != (hash = table.getModel().hashCode()))
+                iconMap.clear();
+            
+            if (!iconMap.containsKey(((File)value).getName())) {
+                FileSystemView fileSystemView = FileSystemView.getFileSystemView();
+                new Thread(() -> {
+                    iconMap.put(((File)value).getName(), fileSystemView.getSystemIcon(((File)value)));
+                    table.repaint();
+                }).start();
+            }
+            
+            JLabel c = (JLabel)super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            if (table.getModel() instanceof DriveFileTableModel)
+                c.setText(((File)value).getPath());
+            else
+                c.setText(((File)value).getName());
+            c.setIcon(iconMap.get(((File)value).getName()));
+            return c;
+        }
+    }
+
+    private static class DateModifiedCellRenderer extends DefaultCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            JLabel c = (JLabel)super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            c.setText(new Date(Long.parseLong(String.valueOf(((File)value).lastModified()))).toLocaleString());
+            return c;
         }
     }
 
@@ -85,15 +114,12 @@ public class FileTable extends JTable { // TODO Add mouse hover effects and impr
                 : String.format("%.1f EB", (bytes >> 20) / 0x1p40);
     } // Taken from StackOverflow
 
-    private static class SizeCellRenderer implements TableCellRenderer {
+    private static class SizeCellRenderer extends DefaultCellRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            return new JLabel(){
-                @Override
-                public String getText() {
-                    return ((File)value).isFile() ? humanReadableByteCountBin(((File)value).length()) : "";
-                }
-            };
+            JLabel c = (JLabel)super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            c.setText(((File)value).isFile() ? humanReadableByteCountBin(((File)value).length()) : "");
+            return c;
         }
     }
 
