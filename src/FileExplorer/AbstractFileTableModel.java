@@ -58,6 +58,4 @@ public abstract class AbstractFileTableModel extends AbstractTableModel {
         fireTableRowsDeleted(1, fileList.size());
         fileList.clear();
     }
-
-    public abstract String getType();
 }
