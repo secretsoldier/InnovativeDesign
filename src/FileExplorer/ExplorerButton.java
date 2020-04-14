@@ -14,34 +14,14 @@ public class ExplorerButton extends JButton {
 
         this.setBorderPainted(false);
         this.setBackground(Color.white);
+        this.setFocusable(false);
     }
     public ExplorerButton(Icon icon){
         this.setIcon(icon);
     }
     public ExplorerButton(Icon icon1, Icon icon2){
-        this.setIcon(icon1);
-
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                setIcon(icon2);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                setIcon(icon1);
-            }
-        });
-    }
-
-    @Override
-    public void setIcon(Icon defaultIcon) {
-        if (defaultIcon.getIconHeight() != this.getHeight()){
-            // TODO Icon resizing
-        }
-        if (defaultIcon.getIconWidth() != this.getWidth()){
-            // TODO Icon resizing
-        }
-        super.setIcon(defaultIcon);
+        setIcon(icon1);
+        setRolloverEnabled(true);
+        setRolloverIcon(icon2);
     }
 }
