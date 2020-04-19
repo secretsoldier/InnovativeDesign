@@ -59,6 +59,15 @@ public class Search { // TODO Fix search function; error prone
         return results.isEmpty() ? null : results;
     }
     
+    public ArrayList<File> byFile(String name, boolean inDirectories, boolean threaded) {
+        if (threaded) {
+            new Thread(() -> byFile(name, inDirectories)).start();
+            return null;
+        } else {
+            return byFile(name, inDirectories);
+        }
+    }
+    
     public ArrayList<File> byDirectory(String name, boolean inDirectories){
         FileIterator files = new FileIterator(root, inDirectories);
         ArrayList<File> results = new ArrayList<>();
@@ -77,6 +86,15 @@ public class Search { // TODO Fix search function; error prone
 
         this.fireSearchEnd(results); // Event end
         return results.isEmpty() ? null : results;
+    }
+    
+    public ArrayList<File> byDirectory(String name, boolean inDirectories, boolean threaded) {
+        if (threaded) {
+            new Thread(() -> byDirectory(name, inDirectories)).start();
+            return null;
+        } else {
+            return byDirectory(name, inDirectories);
+        }
     }
 
     public ArrayList<File> byBoth(String name, boolean inDirectories){
@@ -97,6 +115,15 @@ public class Search { // TODO Fix search function; error prone
 
         this.fireSearchEnd(results); // Event end
         return results.isEmpty() ? null : results;
+    }
+    
+    public ArrayList<File> byBoth(String name, boolean inDirectories, boolean threaded) {
+        if (threaded) {
+            new Thread(() -> byBoth(name, inDirectories)).start();
+            return null;
+        } else {
+            return byBoth(name, inDirectories);
+        }
     }
 }
 

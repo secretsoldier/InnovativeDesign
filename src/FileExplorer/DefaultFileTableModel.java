@@ -4,11 +4,6 @@ import java.io.File;
 import java.util.Objects;
 
 public class DefaultFileTableModel extends AbstractFileTableModel {
-    public static final String TYPE = "default";
-    @Override
-    public String getType() {
-        return TYPE;
-    }
 
     private static class RootHistory {
         public File data;

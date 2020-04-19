@@ -32,7 +32,7 @@ public class SearchFileTableModel extends AbstractFileTableModel implements ISea
 
     @Override
     public boolean SearchUpdate(File result, boolean active) {
-        System.out.printf("\t%s\n", result.getName());
+        //System.out.printf("\t%s\n", result.getName());
         this.addFile(result);
         return this.active;
     }
@@ -45,11 +45,5 @@ public class SearchFileTableModel extends AbstractFileTableModel implements ISea
         System.out.println("Search finished");
         if (events[1] != null)
             events[1].run();
-    }
-
-    public static final String TYPE = "search";
-    @Override
-    public String getType() {
-        return TYPE;
     }
 }

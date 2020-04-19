@@ -14,9 +14,9 @@ import java.util.Queue;
  *
  * @author 18074751
  */
-public class FileIterator implements Iterator { // TODO Redesign class to straighten out errors and incorporate some way of measuring progress
+public class FileIterator implements Iterator<File> { // TODO Incorporate some way of measuring progress
         private final boolean inDirectories;
-        final private Queue<File> directories = new LinkedList(), subjects = new LinkedList();
+        final private Queue<File> directories = new LinkedList<>(), subjects = new LinkedList<>();
         
         public FileIterator(File root, boolean inDirectories){
             assert root.isDirectory();
@@ -32,11 +32,13 @@ public class FileIterator implements Iterator { // TODO Redesign class to straig
         @Override
         public File next() {
             if (subjects.isEmpty()){
-                for (File file : directories.poll().listFiles()){
-                    if (file.isDirectory() && this.inDirectories)
-                        directories.add(file);
-                    subjects.add(file);
-                }
+                File[] files = directories.poll().listFiles();
+                if (files != null)
+                    for (File file : files){
+                        if (file.isDirectory() && this.inDirectories)
+                            directories.add(file);
+                        subjects.add(file);
+                    }
             }
             return subjects.peek() == null ? next() : subjects.poll();
         }

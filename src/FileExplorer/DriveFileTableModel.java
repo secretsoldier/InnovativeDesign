@@ -8,10 +8,4 @@ public class DriveFileTableModel extends AbstractFileTableModel {
             addFile(drive);
         }
     }
-
-    public static final String TYPE = "drive";
-    @Override
-    public String getType() {
-        return TYPE;
-    }
 }
