@@ -6,3 +6,7 @@ build/
 manifest.mf
 nbproject/
 neb.ico
+<<<<<<< Updated upstream
+=======
+/dist/
+>>>>>>> Stashed changes
